@@ -8,6 +8,7 @@ module.exports = {
     "node": true,
   },
   "extends": [
+    'react-native',
   ],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -17,6 +18,7 @@ module.exports = {
     },
   },
   "plugins": [
+    'react-native'
   ],
   "rules": {
   },

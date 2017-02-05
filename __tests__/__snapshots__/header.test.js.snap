@@ -1,0 +1,25 @@
+exports[`test should render the headerText prop 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#f2f2f2",
+      "elevation": 2,
+      "height": 50,
+      "justifyContent": "center",
+      "position": "relative",
+    }
+  }>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 20,
+      }
+    }>
+    Test
+  </Text>
+</View>
+`;
