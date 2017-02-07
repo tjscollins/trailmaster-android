@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import {Text, View,} from 'react-native';
 import axios from 'axios';
 
+/*----------Components----------*/
+import FeatureDetail from './FeatureDetail';
+
 class Controls extends Component {
   state = {geoJSON: []}
   componentWillMount() {
@@ -15,13 +18,33 @@ class Controls extends Component {
       console.error('Error fetching data', err);
     });
   }
+  renderGeoJSON() {
+    return this.state.geoJSON.map((feature) => <FeatureDetail key={feature._id + 'geoJSON-list'} feature={feature} />);
+  }
   render() {
     console.log(this.state);
     return (
       <View>
-        <Text>Controls Panel</Text>
+        {this.renderGeoJSON()}
       </View>
     );
+  }
+}
+
+const styles = {
+  controlsHeader: {
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+  },
+  viewStyle: {
+    alignItems: 'center',
+    backgroundColor: '#f2f2f2',
+    justifyContent: 'center',
+    height: 50,
+    elevation: 2,
+    position: 'relative'
   }
 }
 
