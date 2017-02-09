@@ -1,6 +1,6 @@
 /*----------Modules----------*/
 import React, {Component} from 'react';
-import {Text, View,} from 'react-native';
+import {Text, ScrollView,} from 'react-native';
 import axios from 'axios';
 
 /*----------Components----------*/
@@ -24,14 +24,17 @@ class Controls extends Component {
   render() {
     console.log(this.state);
     return (
-      <View>
+      <ScrollView style={styles.scrollStyle}>
         {this.renderGeoJSON()}
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = {
+  scrollStyle: {
+    // flex: 1
+  },
   controlsHeader: {
     backgroundColor: 'blue',
     alignItems: 'center',
