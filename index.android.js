@@ -6,13 +6,16 @@ import {AppRegistry, View} from 'react-native';
 
 /*----------Components----------*/
 import Header from './src/components/Header';
-import Controls from './src/components/Controls';
+import FeatureList from './src/components/FeatureList';
+import MapViewer from './src/components/MapViewer';
 
 // Create a Component
 const App = () =>  (
   <View>
     <Header headerText={'Trailmaster'}/>
-    <Controls />
+    {/* <SearchModal /> */}
+    {/* <FeatureList /> */}
+    <MapViewer />
   </View>
 );
 

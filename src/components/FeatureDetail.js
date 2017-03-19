@@ -32,18 +32,24 @@ const FeatureDetail = ({feature}) => {
     <FeatureCard>
       <FeatureSection>
         <View style={styles.titleViewStyle}>
-          <Text style={styles.titleStyle}>{name}</Text>
-          <Icon style={{}} name={type == 'Point' ? 'map-marker' : 'road'} size={20}/>
+          <View style={{width: 275}}>
+            <Text style={styles.titleStyle}>{name}</Text>
+          </View>
+          <Icon style={{}} name={type === 'Point' ? 'map-marker' : 'road'} size={20}/>
         </View>
       </FeatureSection>
 
       <FeatureSection>
         <View style={styles.attributeStyle}>
-          <Text>Description:</Text>
+          <View style={{width: 80}}>
+            <Text>Description:</Text>
+          </View>
           <Text style={styles.attributeTextStyle}>{desc}</Text>
         </View>
         <View style={styles.attributeStyle}>
-          <Text>Condition:</Text>
+          <View style={{width: 80}}>
+            <Text>Condition:</Text>
+          </View>
           <Text style={styles.attributeTextStyle}>{condition}</Text>
         </View>
       </FeatureSection>

@@ -6,7 +6,7 @@ import axios from 'axios';
 /*----------Components----------*/
 import FeatureDetail from './FeatureDetail';
 
-class Controls extends Component {
+class FeatureList extends Component {
   state = {geoJSON: []}
   componentWillMount() {
     Promise.all([
@@ -51,4 +51,4 @@ const styles = {
   }
 }
 
-export default Controls;
+export default FeatureList;
