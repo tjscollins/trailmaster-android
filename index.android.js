@@ -14,8 +14,8 @@ const App = () =>  (
   <View>
     <Header headerText={'Trailmaster'}/>
     {/* <SearchModal /> */}
-    {/* <FeatureList /> */}
-    <MapViewer />
+    <FeatureList />
+    {/* <MapViewer /> */}
   </View>
 );
 
