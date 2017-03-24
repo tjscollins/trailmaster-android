@@ -2,17 +2,14 @@
 
 /* ----------Modules---------- */
 import React from 'react';
-import {AppRegistry, View} from 'react-native';
+import {AppRegistry} from 'react-native';
 import {Provider} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-EStyleSheet.build({
-});
+EStyleSheet.build({});
 
 /*----------Components----------*/
-import Header from './src/components/Header';
-import FeatureList from './src/components/FeatureList';
-import MapViewer from './src/components/MapViewer';
+import Trailmaster from './src/trailmaster';
 
 /*----------Redux----------*/
 import configureStore from './src/redux/configureStore';
@@ -20,6 +17,7 @@ import configureStore from './src/redux/configureStore';
 const initialState = {
   UI: {
     minimizedHeader: true,
+    currentView: 'map',
   }
 };
 
@@ -28,12 +26,7 @@ const store = configureStore(initialState);
 // Create a Component
 const App = () =>  (
   <Provider store={store}>
-    <View style={{flex: 1}}>
-      <MapViewer />
-      <Header headerText={'Trailmaster'}/>
-      {/* <SearchModal /> */}
-      {/* <FeatureList /> */}
-    </View>
+    <Trailmaster />
   </Provider>
 );
 

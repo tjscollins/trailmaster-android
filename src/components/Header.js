@@ -37,9 +37,11 @@ class Header extends Component {
   }
   searchButton() {
     console.log('Pressed Search!');
-    this.setState({
-      searchVisible: !this.state.searchVisible
-    });
+    this.props.dispatch(actions.switchToSearchView());
+  }
+  mapButton() {
+    console.log('Pressed Map!');
+    this.props.dispatch(actions.switchToMapView());
   }
   settings() {
     console.log('Pressed Settings!')
@@ -120,7 +122,7 @@ class Header extends Component {
           return (
             <TouchableOpacity
               onPress={this
-                    .searchButton
+                    .mapButton
                 .bind(this)}>
               <Icon style={styles.mapButtonStyle} name='map' size={20}/>
             </TouchableOpacity>
