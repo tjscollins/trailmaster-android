@@ -1,9 +1,9 @@
 import {compose, applyMiddleware, createStore, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
-import {UIReducer} from './reducers';
+import {UIReducer, userSessionReducer} from './reducers';
 
 const configureStore = (initialState = {}) => {
-  const reducer = combineReducers({UI: UIReducer});
+  const reducer = combineReducers({UI: UIReducer, userSession: userSessionReducer});
 
   const store = createStore(reducer, initialState, compose(applyMiddleware(thunk), window.devToolsExtension
     ? window.devToolsExtension()

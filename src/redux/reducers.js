@@ -1,19 +1,34 @@
 export const UIReducer = (state = {}, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'TOGGLE_HEADER':
       return {
         ...state,
-        minimizedHeader: !state.minimizedHeader,
+        minimizedHeader: !state.minimizedHeader
       };
     case 'SWITCH_TO_MAP_VIEW':
       return {
         ...state,
-        currentView: 'map',
+        currentView: 'map'
       };
     case 'SWITCH_TO_SEARCH_VIEW':
       return {
         ...state,
-        currentView: 'search',
+        currentView: 'search'
+      };
+    default:
+      return state;
+  }
+};
+
+export const userSessionReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'UPDATE_POS':
+      return {
+        ...state,
+        coords: {
+          latitude: action.position.coords.latitude,
+          longitude: action.position.coords.longitude
+        }
       };
     default:
       return state;
