@@ -42,9 +42,6 @@ class MapViewer extends Component {
     console.log('Rendering Map');
     return (
       <View style={styles.container}>
-        <View>
-          <Text>God damn it</Text>
-        </View>
         <MapView
           style={styles.map}
           initialRegion={{
