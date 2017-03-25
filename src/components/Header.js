@@ -30,10 +30,14 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 class Header extends Component {
   state = {
     // minimizedHeader: true,
-    searchVisible: false,
-    searchText: '',
-    shouldAutoCorrect: false,
-    transparentSearch: false
+    // searchVisible: false,
+    // searchText: '',
+    // shouldAutoCorrect: false,
+    // transparentSearch: false
+  }
+  homeButton() {
+    console.log('Pressed Home!');
+    this.props.dispatch(actions.switchToHomeView());
   }
   searchButton() {
     console.log('Pressed Search!');
@@ -80,6 +84,13 @@ class Header extends Component {
       toggleButtonStyle: {
         marginRight: 10
       },
+      homeButtonStyle: {
+        marginRight: 10,
+        color: 'black',
+        opacity: UI.minimizedHeader
+          ? 0
+          : 1
+      },
       searchButtonStyle: {
         marginRight: 10,
         color: 'steelblue',
@@ -105,6 +116,18 @@ class Header extends Component {
     return (
       <View style={styles.headerStyle}>
         <Text style={styles.titleStyle}>{headerText}</Text>
+        {((display) => {
+          if (display)
+          return (
+            <TouchableOpacity
+              onPress={this
+                .homeButton
+                .bind(this)}>
+              <Icon style={styles.homeButtonStyle} name='home' size={20}/>
+            </TouchableOpacity>
+          );
+        }
+        )(!UI.minimizedHeader)}
         {((display) => {
           if (display)
           return (

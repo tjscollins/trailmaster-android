@@ -6,7 +6,9 @@ import {AppRegistry} from 'react-native';
 import {Provider} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-EStyleSheet.build({});
+EStyleSheet.build({
+  $visibleFeatureColor: 'hsl(120, 25%, 75%)'
+});
 
 /*----------Components----------*/
 import Trailmaster from './src/trailmaster';
@@ -20,8 +22,8 @@ import {positionChanged, fetchData, validateServerData} from './src/api/Trailmas
 
 const initialState = {
   UI: {
-    minimizedHeader: true,
-    currentView: 'map'
+    minimizedHeader: false,
+    currentView: 'home'
   },
   userSession: {
     visibleFeatures: [],
@@ -30,8 +32,8 @@ const initialState = {
     routeList: [],
     mapCentering: false,
     coords: {
-      latitude: 0,
-      longitude: 0
+      latitude: 15.15,
+      longitude: 145.7
     }
   },
   geoJSON: {
@@ -40,6 +42,13 @@ const initialState = {
 };
 
 const store = configureStore(initialState);
+fetchData(initialState.userSession.coords.latitude, initialState.userSession.coords.longitude, initialState.userSession.distanceFilter).then((features) => {
+  // console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
+  console.log('Received features', features);
+  store.dispatch(actions.replaceGeoJSON(features));
+}).catch((error) => {
+  throw error;
+});
 
 //Initialize User Location Monitoring
 const processGeolocation = (pos) => {

@@ -11,6 +11,10 @@ export const switchToSearchView = () => {
   return {type: 'SWITCH_TO_SEARCH_VIEW'};
 };
 
+export const switchToHomeView = () => {
+  return {type: 'SWITCH_TO_HOME_VIEW'};
+};
+
 // userSession actions
 export const updatePOS = (position) => {
   return {type: 'UPDATE_POS', position};

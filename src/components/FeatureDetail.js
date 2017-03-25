@@ -36,12 +36,21 @@ class FeatureDetail extends React.Component {
     const {name, desc, condition} = feature.properties;
     const {type} = feature.geometry;
     const styles = EStyleSheet.create({
-      featureCard: {
+      containerStyle: {
         backgroundColor: this.isDisplayed()
-          ? 'lightblue'
-          : 'white'
+          ? '$visibleFeatureColor'
+          : 'white',
+        borderBottomWidth: 1,
+        borderColor: '#ddd',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        padding: 5,
+        position: 'relative',
       },
       titleViewStyle: {
+        backgroundColor: this.isDisplayed()
+          ? '$visibleFeatureColor'
+          : 'white',
         flexDirection: 'row',
         justifyContent: 'space-between'
       },
@@ -51,6 +60,9 @@ class FeatureDetail extends React.Component {
         color: '#333'
       },
       attributeStyle: {
+        backgroundColor: this.isDisplayed()
+          ? '$visibleFeatureColor'
+          : 'white',
         flexDirection: 'row',
         padding: 5
       },
@@ -60,9 +72,9 @@ class FeatureDetail extends React.Component {
       }
     });
     return (
-      <FeatureCard styles={styles.featureCard}>
+      <FeatureCard>
         <TouchableOpacity onPress={this.selectFeature}>
-          <FeatureSection>
+          <View style={styles.containerStyle}>
             <View style={styles.titleViewStyle}>
               <View style={{
                 width: 275
@@ -76,9 +88,9 @@ class FeatureDetail extends React.Component {
                 : 'road'}
                 size={20}/>
             </View>
-          </FeatureSection>
+          </View>
 
-          <FeatureSection>
+          <View style={styles.containerStyle}>
             <View style={styles.attributeStyle}>
               <View style={{
                 width: 80
@@ -95,7 +107,7 @@ class FeatureDetail extends React.Component {
               </View>
               <Text style={styles.attributeTextStyle}>{condition}</Text>
             </View>
-          </FeatureSection>
+          </View>
         </TouchableOpacity>
       </FeatureCard>
     );

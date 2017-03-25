@@ -15,6 +15,11 @@ export const UIReducer = (state = {}, action) => {
         ...state,
         currentView: 'search'
       };
+    case 'SWITCH_TO_HOME_VIEW':
+      return {
+        ...state,
+        currentView: 'home',
+      };
     default:
       return state;
   }
