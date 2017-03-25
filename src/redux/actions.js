@@ -15,3 +15,8 @@ export const switchToSearchView = () => {
 export const updatePOS = (position) => {
   return {type: 'UPDATE_POS', position};
 };
+
+// geoJSON actions
+export const replaceGeoJSON = (features) => {
+  return {type: 'REPLACE_GEO_JSON', features};
+};

@@ -54,7 +54,6 @@ class MapViewer extends Component {
     const mapRegion = {
       latitude, longitude, longitudeDelta: 0.1, latitudeDelta: 0.05,
     };
-    console.log('Image: ', require('../img/blue_circle.png'));
     return (
       <View style={styles.container}>
         <MapView

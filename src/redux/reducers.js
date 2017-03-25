@@ -34,3 +34,15 @@ export const userSessionReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const geoJSONReducer = (state = {}, action) => {
+  switch(action.type) {
+    case 'REPLACE_GEO_JSON':
+      return {
+        ...state,
+        features: action.features,
+      };
+    default:
+      return state;
+  }
+};

@@ -1,54 +1,44 @@
 /*----------Modules----------*/
 import React, {Component} from 'react';
-import {Text, ScrollView,} from 'react-native';
-import axios from 'axios';
+import {ScrollView} from 'react-native';
+import {connect} from 'react-redux';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 /*----------Components----------*/
 import FeatureDetail from './FeatureDetail';
 
+/*----------Redux----------*/
+// import * as actions from '../redux/actions';
+
+/*----------API----------*/
+// import {fetchData, validateServerData} from '../api/TrailmasterAPI';
+
 class FeatureList extends Component {
-  state = {geoJSON: []}
-  componentWillMount() {
-    Promise.all([
-      axios.get('https://trailmaster.herokuapp.com/pois'),
-      axios.get('https://trailmaster.herokuapp.com/routes'),
-    ]).then(res => {
-      this.setState({geoJSON: [...res[0].data.pois, ...res[1].data.routes]})
-    }).catch(err => {
-      console.error('Error fetching data', err);
-    });
-  }
   renderGeoJSON() {
-    return this.state.geoJSON.map((feature) => <FeatureDetail key={feature._id + 'geoJSON-list'} feature={feature} />);
+    return this
+      .props
+      .geoJSON
+      .features
+      .map((feature) => <FeatureDetail key={feature._id + 'geoJSON-list'} feature={feature}/>);
   }
   render() {
-    console.log(this.state);
+    const styles = EStyleSheet.create({
+      scrollViewStyle: {},
+    });
     return (
-      <ScrollView style={styles.scrollStyle}>
+      <ScrollView style={styles.scrollViewStyle}>
         {this.renderGeoJSON()}
       </ScrollView>
     );
   }
 }
 
-const styles = {
-  scrollStyle: {
-    // flex: 1
-  },
-  controlsHeader: {
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
-  },
-  viewStyle: {
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2',
-    justifyContent: 'center',
-    height: 50,
-    elevation: 2,
-    position: 'relative'
-  }
-}
 
-export default FeatureList;
+
+FeatureList.propTypes = {
+  // dispatch: React.PropTypes.func,
+  // userSession: React.PropTypes.object,
+  geoJSON: React.PropTypes.object,
+};
+
+export default connect(state => state)(FeatureList);

@@ -1,20 +1,35 @@
 // import $ from 'jquery';
+import axios from 'axios';
 
 export const fetchData = (lat, lng, dist) => {
   // console.log('Fetching data for: ', lat, lng, dist);
   return Promise.all([
-    $.get(`/pois?lat=${lat}&lng=${lng}&dist=${dist}`),
-    $.get(`/routes?lat=${lat}&lng=${lng}&dist=${dist}`),
-  ]).then((data) => {
+    axios.get(`https://trailmaster.herokuapp.com/pois?lat=${lat}&lng=${lng}&dist=${dist}`),
+    axios.get(`https://trailmaster.herokuapp.com/routes?lat=${lat}&lng=${lng}&dist=${dist}`),
+  ]).then((responses) => {
     // console.log('Fetched data: ', data);
-    return Promise.resolve(data);
+    const features = responses.reduce((acc, currentObject) => {
+      const allObjects = [];
+      for (const key in currentObject.data) {
+        // Validate Server Data BEFORE loading it into Redux Store
+        if (Array.isArray(currentObject.data[key])) {
+          currentObject.data[key].forEach((item) => {
+            if (validateServerData(item))
+              allObjects.push(item);
+            }
+          );
+        }
+      }
+      return acc.concat(allObjects);
+    }, []);
+    return Promise.resolve(features);
   }).catch((error) => {
     return Promise.reject(error);
   });
 };
 
 export const validateServerData = (data) => {
-  let {coordinates, type} = data.geometry;
+  const {coordinates, type} = data.geometry;
   if (coordinates.length <= 1) {
     return false;
   }
@@ -176,8 +191,8 @@ export function changedProps(nextProps, oldProps) {
  * positionChanged - returns true of position changed by more than a certain fraction
  *                    of a degree in either direction.
  *
- * @param  {type} posOne description
- * @param  {type} posTwo description
+ * @param  {object} posOne description
+ * @param  {object} posTwo description
  * @return {type}        description
  */
 export function positionChanged(posOne, posTwo, minDistance=50) {
