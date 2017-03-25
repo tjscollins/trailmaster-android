@@ -16,6 +16,13 @@ import {connect} from 'react-redux';
 // Mapbox.setAccessToken(accessToken);
 
 class MapViewer extends Component {
+  displayVisibleFeatures() {
+    const {userSession: {visibleFeatures}, geoJSON: {features}} = this.props;
+    const displayed = features.filter((feature) => {
+      return visibleFeatures.indexOf(feature._id) > -1;
+    });
+    console.log('Displaying Features: ', displayed);
+  }
   render() {
     const {coords: {latitude, longitude}} = this.props.userSession;
     console.log('Rendering Map', typeof latitude, latitude, typeof longitude, longitude);
@@ -68,6 +75,7 @@ class MapViewer extends Component {
               You
             </Text>
           </MapView.Marker>
+          {this.displayVisibleFeatures()}
         </MapView>
       </View>
     );

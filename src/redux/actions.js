@@ -20,3 +20,7 @@ export const updatePOS = (position) => {
 export const replaceGeoJSON = (features) => {
   return {type: 'REPLACE_GEO_JSON', features};
 };
+
+export const toggleVisibility = (id) => {
+  return {type: 'TOGGLE_VISIBILITY', id};
+};

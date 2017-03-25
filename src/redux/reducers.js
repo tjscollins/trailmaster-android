@@ -30,17 +30,36 @@ export const userSessionReducer = (state = {}, action) => {
           longitude: action.position.coords.longitude
         }
       };
+    case 'TOGGLE_VISIBILITY':
+      return state
+        .visibleFeatures
+        .indexOf(action.id) > -1
+        ? {
+          ...state,
+          visibleFeatures: state
+            .visibleFeatures
+            .filter((id) => {
+              return id !== action.id;
+            })
+        }
+        : {
+          ...state,
+          visibleFeatures : [
+            ...state.visibleFeatures,
+            action.id
+          ]
+        };
     default:
       return state;
   }
 };
 
 export const geoJSONReducer = (state = {}, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'REPLACE_GEO_JSON':
       return {
         ...state,
-        features: action.features,
+        features: action.features
       };
     default:
       return state;

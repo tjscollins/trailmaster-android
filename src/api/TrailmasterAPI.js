@@ -195,7 +195,7 @@ export function changedProps(nextProps, oldProps) {
  * @param  {object} posTwo description
  * @return {type}        description
  */
-export function positionChanged(posOne, posTwo, minDistance=50) {
+export function positionChanged(posOne, posTwo, minDistance=5) {
   /**
    * minDistance determines the minimum position change to register as a new position.
    *              Its value represents a distance in feet, while SENSITIVITY represents
