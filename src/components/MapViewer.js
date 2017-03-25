@@ -21,7 +21,56 @@ class MapViewer extends Component {
     const displayed = features.filter((feature) => {
       return visibleFeatures.indexOf(feature._id) > -1;
     });
-    console.log('Displaying Features: ', displayed);
+    const array =  displayed.map((feature) => {
+      const {type, coordinates} = feature.geometry;
+      const {name} = feature.properties;
+      const styles = EStyleSheet.create({
+        marker: {
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        featureMarker: {
+          width: 5,
+          height: 5,
+          borderRadius: 100,
+          backgroundColor: '$featureMarkerColor',
+        },
+        labelMarker: {
+          fontSize: 10,
+        }
+      });
+      if (type === 'Point') {
+        const coords = {
+          latitude: coordinates[1],
+          longitude: coordinates[0],
+        };
+        return (
+          <MapView.Marker key={feature._id + 'map-marker'} style={styles.marker} coordinate={coords}>
+            <Text style={styles.labelMarker}>
+              {name}
+            </Text>
+            <View style={styles.featureMarker}>
+            </View>
+          </MapView.Marker>
+        );
+      } else if (type === 'LineString') {
+        const coords = coordinates.map(([longitude, latitude]) => {
+          return {longitude, latitude};
+        });
+        return (
+          <View key={feature._id + 'map-marker'}>
+            <MapView.Polyline coordinates={coords} />
+            <MapView.Marker coordinate={coords[0]}>
+              <Text style={styles.labelMarker}>
+                {name}
+              </Text>
+            </MapView.Marker>
+          </View>
+        );
+      }
+    });
+    console.log('Displaying Features: ', array);
+    return array;
   }
   render() {
     const {coords: {latitude, longitude}} = this.props.userSession;
@@ -52,7 +101,7 @@ class MapViewer extends Component {
         width: 5,
         height: 5,
         borderRadius: 100,
-        backgroundColor: 'blue',
+        backgroundColor: '$positionMarkerColor',
       },
       labelMarker: {
         fontSize: 10,
