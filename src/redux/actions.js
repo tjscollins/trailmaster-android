@@ -61,3 +61,8 @@ export const saveTrail = (trail) => {
 export const showTrail = (id) => {
   return {type: 'SHOW_TRAIL', id};
 };
+
+//maps actions
+export const saveMap = (map) => {
+  return {type: 'SAVE_MAP', map};
+};

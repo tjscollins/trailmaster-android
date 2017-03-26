@@ -129,6 +129,21 @@ export const trailsReducer = (state={}, action) => {
   }
 };
 
+export const staticMapsReducer = (state={}, action) => {
+  switch(action.type) {
+    case 'SAVE_MAP':
+      return {
+        ...state,
+        staticMaps: [
+          ...state.staticMaps,
+          action.map
+        ],
+      };
+    default:
+      return state;
+  }
+}
+
 const month = (mo) => {
   return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'][mo];
 };

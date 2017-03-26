@@ -63,7 +63,40 @@ class SaveButton extends Component {
       console.log('Error posting new trail', error);
     });
   }
-  saveMap() {}
+  saveMap() {
+    const {dispatch, geoJSON, userSession} = this.props;
+    const {xAuth, mapRegion} = userSession;
+    const {name, desc} = this.state;
+    const list = geoJSON
+      .features
+      .filter((point) => {
+        return userSession
+          .visibleFeatures
+          .indexOf(point._id) > -1;
+      });
+    const newMap = {
+      list,
+      mapRegion,
+      name,
+      desc,
+    };
+    dispatch(actions.saveMap(newMap));
+
+    /**
+     * Need to implement server-route for this to work
+     */
+    // const send = axios.post('https://trailmaster.herokuapp.com/static-maps', newMap, {
+    //   headers: {
+    //     'Content-type': 'application/json',
+    //     'x-auth': xAuth
+    //   }
+    // }).then((response) => {
+    //   dispatch(actions.saveMap(newMap));
+    //   this.setState({mainModalVisible: false, mapModalVisible: false})
+    // }).catch((error) => {
+    //   console.log('Error posting new map', error);
+    // });
+  }
   render() {
     const {UI} = this.props;
     const styles = EStyleSheet.create({
@@ -293,6 +326,12 @@ class SaveButton extends Component {
       </View>
     );
   }
+}
+
+SaveButton.propTypes = {
+  geoJSON: React.PropTypes.object,
+  userSession: React.PropTypes.object,
+  dispatch: React.PropTypes.func,
 }
 
 export default connect(state => state)(SaveButton);
