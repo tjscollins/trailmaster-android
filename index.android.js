@@ -2,7 +2,7 @@
 
 /* ----------Modules---------- */
 import React from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, AsyncStorage} from 'react-native';
 import {Provider} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -15,7 +15,7 @@ EStyleSheet.build({
   $infoButtonColor: '#5bc0de',
   $successButtonColor: '#5cb85c',
   $warningButtonColor: '#f0ad4e',
-  $dangerButtonColor: '#d9534f',
+  $dangerButtonColor: '#d9534f'
 });
 
 /*----------Components----------*/
@@ -45,15 +45,19 @@ const initialState = {
     }
   },
   geoJSON: {
-    features: [],
+    features: []
   },
   trails: {
-    myTrails: [],
-  },
+    myTrails: []
+  }
 };
 
 const store = configureStore(initialState);
-fetchData(initialState.userSession.coords.latitude, initialState.userSession.coords.longitude, initialState.userSession.distanceFilter).then((features) => {
+
+const {coords, distanceFilter} = store
+  .getState()
+  .userSession;
+fetchData(coords.latitude, coords.longitude, distanceFilter).then((features) => {
   // console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
   console.log('Received features', features);
   store.dispatch(actions.replaceGeoJSON(features));
@@ -63,13 +67,27 @@ fetchData(initialState.userSession.coords.latitude, initialState.userSession.coo
 
 //Initialize User Location Monitoring
 const processGeolocation = (pos) => {
-  const {userSession: {coords: {latitude, longitude}, distanceFilter}} = store.getState();
+  const {
+    userSession: {
+      coords: {
+        latitude,
+        longitude
+      },
+      distanceFilter
+    }
+  } = store.getState();
   const ONE_TENTH = 528; // Convert miles to one tenth distance in feet
-  if(positionChanged({latitude, longitude}, pos, 5)) {
+  if (positionChanged({
+    latitude,
+    longitude
+  }, pos, 5)) {
     console.log('positionChanged', pos);
     store.dispatch(actions.updatePOS(pos));
   }
-  if(positionChanged({latitude, longitude}, pos, distanceFilter*ONE_TENTH)) {
+  if (positionChanged({
+    latitude,
+    longitude
+  }, pos, distanceFilter * ONE_TENTH)) {
     fetchData(pos.coords.latitude, pos.coords.longitude, distanceFilter).then((features) => {
       console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
       console.log('Received features', features);
@@ -79,8 +97,8 @@ const processGeolocation = (pos) => {
     });
   }
   // if (store.getState().userSession.trackingRoute)
-  //   store.dispatch(actions.addToRouteList(pos));
-  };
+  // store.dispatch(actions.addToRouteList(pos));
+};
 
 const geolocationError = (err) => {
   console.error('Error tracking user position', err);
@@ -88,8 +106,7 @@ const geolocationError = (err) => {
 
 navigator
   .geolocation
-  .watchPosition(processGeolocation,
-  geolocationError, {
+  .watchPosition(processGeolocation, geolocationError, {
     timeout: 60000,
     // enableHighAccuracy: true,
   });
