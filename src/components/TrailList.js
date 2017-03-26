@@ -17,9 +17,13 @@ import * as actions from '../redux/actions';
 
 class TrailList extends Component {
   state = {
-    trails: []
+    trails: [],
   }
   componentWillMount() {
+    const trails = this.props.trails.myTrails.map((trail) => <TrailDetail key={trail._id + 'trail-list'} trail={trail}/>);
+    this.setState({trails});
+  }
+  componentDidMount() {
     const {xAuth} = this.props.userSession;
     const {trails, dispatch} = this.props;
     axios
