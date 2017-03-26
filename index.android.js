@@ -11,7 +11,11 @@ EStyleSheet.build({
   $featureMarkerColor: 'hsl(0, 35%, 75%)',
   $positionMarkerColor: 'blue',
   $homeScreenButtonHeight: 130,
-  $primaryButtonColor: 'hsl(200, 100%, 75%)',
+  $primaryButtonColor: '#428bca',
+  $infoButtonColor: '#5bc0de',
+  $successButtonColor: '#5cb85c',
+  $warningButtonColor: '#f0ad4e',
+  $dangerButtonColor: '#d9534f',
 });
 
 /*----------Components----------*/

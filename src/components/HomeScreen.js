@@ -19,7 +19,7 @@ class HomeScreen extends React.Component {
     super();
   }
   showLogin() {
-    this.props.replaceRoute({
+    this.props.toRoute({
       name: 'Login',
       component: Login,
       statusBarProps: {
@@ -131,7 +131,7 @@ class HomeScreen extends React.Component {
 
 HomeScreen.propTypes = {
   userSession: React.PropTypes.object.isRequired,
-  // toRoute: React.PropTypes.func.isRequired,
+  toRoute: React.PropTypes.func.isRequired,
   replaceRoute: React.PropTypes.func.isRequired,
 };
 

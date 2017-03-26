@@ -9,16 +9,15 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Header from './components/Header';
 import HomeScreen from './components/HomeScreen';
 
-
 /**
- * Router Objects
+ * Router Object
  */
  const homeRoute = {
    name: 'HomeScreen',
    component: HomeScreen,
    statusBarProps: {
      hidden: true,
-   }
+   },
  };
 
 class Trailmaster extends React.Component {
@@ -29,46 +28,10 @@ class Trailmaster extends React.Component {
       }
     });
     return (
-      <View style={{
-        flex: 1
-      }}>
-        {/* <Header headerText={'Trailmaster'}/> */}
-        <Router noStatusBar hideNavigationBar bgStyle={styles.bgStyle} firstRoute={homeRoute} />
+      <View style={{flex: 1}}>
+        <Router noStatusBar hideNavigationBar handleBackAndroid bgStyle={styles.bgStyle} firstRoute={homeRoute} />
       </View>
     );
-    // return ((currentView) => {
-    //   switch (currentView) {
-    //     case 'map':
-    //       return (
-            // <View style={{
-            //   flex: 1
-            // }}>
-            //   <MapViewer/>
-            //   <Header headerText={'Trailmaster'}/>
-            // </View>
-    //       );
-    //     case 'search':
-    //       return (
-    //         <View style={{
-    //           flex: 1
-    //         }}>
-    //           <Header headerText={'Trailmaster'}/>
-    //           <FeatureList/>
-    //         </View>
-    //       );
-    //     case 'home':
-    //       return (
-    //         <View style={{
-    //           flex: 1
-    //         }}>
-    //           <Header headerText={'Trailmaster'}/>
-    //           <HomeScreen/>
-    //         </View>
-    //       );
-    //     default:
-    //       return;
-    //   }
-    // })(this.props.UI.currentView);
   }
 }
 

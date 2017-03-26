@@ -1,4 +1,5 @@
-/*global AsyncStorage*/
+import {AsyncStorage} from 'react-native';
+
 export const UIReducer = (state = {}, action) => {
   switch (action.type) {
     case 'TOGGLE_HEADER':
