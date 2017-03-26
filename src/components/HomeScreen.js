@@ -19,27 +19,47 @@ class HomeScreen extends React.Component {
     super();
   }
   showLogin() {
-    this.props.toRoute({
-      name: 'Login',
-      component: Login,
-      statusBarProps: {
-        hidden: true
-      },
-    });
+    this
+      .props
+      .toRoute({
+        name: 'Login',
+        component: Login,
+        statusBarProps: {
+          hidden: true
+        }
+      });
   }
-  loginText() {
+  loginText(styles) {
     const {email} = this.props.userSession;
-    if(email) {
-      return `Logged in as: ${email}`;
+    if (email) {
+      return (
+        <View style={styles.buttonStyle}>
+          <Text style={styles.buttonTextStyle}>
+            Logout
+          </Text>
+          <Text style={styles.buttonTextStyle}>
+            {email}
+          </Text>
+        </View>
+      );
     } else {
-      return 'Login';
+      return (
+        <View style={styles.buttonStyle}>
+          <Text style={styles.buttonTextStyle}>
+            Login
+          </Text>
+        </View>
+      );
     }
   }
+  logout() {
+    this.props.dispatch(actions.logout());
+  }
   myTrailsText() {
-    return 'My Trails Button';
+    return 'View My Trails';
   }
   savedMapsText() {
-    return 'Saved Maps Button';
+    return 'View Saved Maps';
   }
   render() {
     const {xAuth} = this.props.userSession;
@@ -56,28 +76,13 @@ class HomeScreen extends React.Component {
         marginLeft: 30,
         marginRight: 0,
         maxHeight: '$homeScreenButtonHeight',
+        justifyContent: 'space-around',
+        alignItems: 'center'
       },
       buttonTextStyle: {
-
+        fontWeight: 'bold',
+        fontSize: 20
       },
-      // loginStyle: {
-      //   flex: 1,
-      //   backgroundColor: 'white',
-      //   aspectRatio: 2,
-      //   borderColor: '#ddd',
-      //   borderRadius: 2,
-      //   borderWidth: 1,
-      //   elevation: 1,
-      //   maxHeight: '$homeScreenButtonHeight',
-      // },
-      // myTrailsStyle: {
-      //
-      // },
-      // savedMapsStyle: {
-      //   backgroundColor: 'white',
-      //   aspectRatio: 2,
-      //   height: 100
-      // },
       containerStyle: {
         flex: 1,
         alignItems: 'center',
@@ -87,15 +92,17 @@ class HomeScreen extends React.Component {
       }
     });
     return (
-      <View style={{flex: 1}}>
+      <View style={{
+        flex: 1
+      }}>
         <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
         <View style={styles.containerStyle}>
           {((isLoggedIn) => {
-            if(isLoggedIn) {
+            if (isLoggedIn) {
               return (
                 <TouchableOpacity>
                   <View style={styles.buttonStyle}>
-                    <Text>
+                    <Text style={styles.buttonTextStyle}>
                       {this.myTrailsText()}
                     </Text>
                   </View>
@@ -104,11 +111,11 @@ class HomeScreen extends React.Component {
             }
           })(xAuth)}
           {((isLoggedIn) => {
-            if(isLoggedIn) {
+            if (isLoggedIn) {
               return (
                 <TouchableOpacity>
                   <View style={styles.buttonStyle}>
-                    <Text>
+                    <Text style={styles.buttonTextStyle}>
                       {this.savedMapsText()}
                     </Text>
                   </View>
@@ -116,12 +123,10 @@ class HomeScreen extends React.Component {
               );
             }
           })(xAuth)}
-          <TouchableOpacity onPress={this.showLogin.bind(this)}>
-            <View style={styles.buttonStyle}>
-              <Text style={styles.buttonTextStyle}>
-                {this.loginText()}
-              </Text>
-            </View>
+          <TouchableOpacity onPress={xAuth ? this.logout.bind(this) : this
+            .showLogin
+            .bind(this)}>
+            {this.loginText(styles)}
           </TouchableOpacity>
         </View>
       </View>
@@ -133,6 +138,7 @@ HomeScreen.propTypes = {
   userSession: React.PropTypes.object.isRequired,
   toRoute: React.PropTypes.func.isRequired,
   replaceRoute: React.PropTypes.func.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
 };
 
 export default connect(state => state)(HomeScreen);

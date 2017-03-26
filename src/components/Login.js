@@ -19,12 +19,6 @@ class Login extends Component {
     email: '',
     password: ''
   }
-  // emailEntry(email) {
-  //   this.setState({email});
-  // }
-  // passwordEntry(password) {
-  //   this.setState({password});
-  // }
   submit() {
     const {dispatch} = this.props;
     const {password, email} = this.state;
