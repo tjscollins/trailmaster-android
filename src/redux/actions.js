@@ -16,6 +16,14 @@ export const switchToHomeView = () => {
 };
 
 // userSession actions
+export const login = (xAuth, userId, email) => {
+  return {type: 'LOGIN', xAuth, userId, email};
+};
+
+export const logout = () => {
+  return {type: 'LOGOUT'};
+};
+
 export const updatePOS = (position) => {
   return {type: 'UPDATE_POS', position};
 };

@@ -1,11 +1,12 @@
 /*----------Modules----------*/
 import React, {Component} from 'react';
-import {ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 /*----------Components----------*/
 import FeatureDetail from './FeatureDetail';
+import Header from './Header';
 
 /*----------Redux----------*/
 // import * as actions from '../redux/actions';
@@ -26,9 +27,15 @@ class FeatureList extends Component {
       scrollViewStyle: {},
     });
     return (
-      <ScrollView style={styles.scrollViewStyle}>
-        {this.renderGeoJSON()}
-      </ScrollView>
+      <View style={{
+        flex: 1
+      }}>
+        <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
+
+        <ScrollView style={styles.scrollViewStyle}>
+          {this.renderGeoJSON()}
+        </ScrollView>
+      </View>
     );
   }
 }

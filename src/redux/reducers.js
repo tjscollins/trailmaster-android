@@ -1,3 +1,4 @@
+/*global AsyncStorage*/
 export const UIReducer = (state = {}, action) => {
   switch (action.type) {
     case 'TOGGLE_HEADER':
@@ -18,7 +19,7 @@ export const UIReducer = (state = {}, action) => {
     case 'SWITCH_TO_HOME_VIEW':
       return {
         ...state,
-        currentView: 'home',
+        currentView: 'home'
       };
     default:
       return state;
@@ -27,6 +28,26 @@ export const UIReducer = (state = {}, action) => {
 
 export const userSessionReducer = (state = {}, action) => {
   switch (action.type) {
+    case 'LOGIN':
+      const {xAuth, userId, email} = action;
+      const trailmasterLogin = {
+        xAuth,
+        _id: userId,
+        email
+      };
+      AsyncStorage.setItem('trailmaster-login', JSON.stringify(trailmasterLogin));
+      return {
+        ...state,
+        ...trailmasterLogin
+      };
+    case 'LOGOUT':
+      AsyncStorage.removeItem('trailmaster-login');
+      return {
+        ...state,
+        xAuth: null,
+        _id: null,
+        email: null
+      };
     case 'UPDATE_POS':
       return {
         ...state,

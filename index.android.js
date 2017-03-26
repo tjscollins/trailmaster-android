@@ -10,6 +10,7 @@ EStyleSheet.build({
   $visibleFeatureColor: 'hsl(120, 25%, 75%)',
   $featureMarkerColor: 'hsl(0, 35%, 75%)',
   $positionMarkerColor: 'blue',
+  $homeScreenButtonHeight: 130,
 });
 
 /*----------Components----------*/

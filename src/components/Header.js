@@ -15,6 +15,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import * as actions from '../redux/actions';
 
+/*----------Components----------*/
+import HomeScreen from './HomeScreen';
+import FeatureList from './FeatureList';
+import MapViewer from './MapViewer';
+
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -29,23 +34,47 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 class Header extends Component {
   state = {
-    // minimizedHeader: true,
-    // searchVisible: false,
-    // searchText: '',
-    // shouldAutoCorrect: false,
-    // transparentSearch: false
+    // minimizedHeader: true, searchVisible: false, searchText: '',
+    // shouldAutoCorrect: false, transparentSearch: false
   }
   homeButton() {
     console.log('Pressed Home!');
-    this.props.dispatch(actions.switchToHomeView());
+    // this
+    //   .props
+    //   .dispatch(actions.switchToHomeView());
+    this.props.toRoute({
+      name: 'HomeScreen',
+      component: HomeScreen,
+      statusBarProps: {
+        hidden: true,
+      }
+    });
   }
   searchButton() {
     console.log('Pressed Search!');
-    this.props.dispatch(actions.switchToSearchView());
+    // this.props.dispatch(actions.switchToSearchView());
+    this
+      .props
+      .toRoute({
+        name: 'Search',
+        component: FeatureList,
+        statusBarProps: {
+          hidden: true
+        }
+      });
   }
   mapButton() {
     console.log('Pressed Map!');
-    this.props.dispatch(actions.switchToMapView());
+    // this
+    //   .props
+    //   .dispatch(actions.switchToMapView());
+    this.props.toRoute({
+      name: 'Map',
+      component: MapViewer,
+      statusBarProps: {
+        hidden: true,
+      }
+    });
   }
   settings() {
     console.log('Pressed Settings!')
@@ -63,7 +92,7 @@ class Header extends Component {
     const styles = EStyleSheet.create({
       headerStyle: {
         width: UI.minimizedHeader
-          ? 150
+          ? 50
           : undefined,
         alignItems: 'center',
         backgroundColor: '#f2f2f2',
@@ -78,11 +107,13 @@ class Header extends Component {
       },
       titleStyle: {
         fontSize: 20,
-        paddingLeft: 15,
-        // width: '50%',
+        marginLeft: 10,
+        width: UI.minimizedHeader
+          ? 0
+          : undefined
       },
       toggleButtonStyle: {
-        marginRight: 10
+        marginRight: 18
       },
       homeButtonStyle: {
         marginRight: 10,
@@ -118,58 +149,58 @@ class Header extends Component {
         <Text style={styles.titleStyle}>{headerText}</Text>
         {((display) => {
           if (display)
-          return (
-            <TouchableOpacity
-              onPress={this
+            return (
+              <TouchableOpacity
+                onPress={this
                 .homeButton
                 .bind(this)}>
-              <Icon style={styles.homeButtonStyle} name='home' size={20}/>
-            </TouchableOpacity>
-          );
-        }
+                <Icon style={styles.homeButtonStyle} name='home' size={20}/>
+              </TouchableOpacity>
+            );
+          }
         )(!UI.minimizedHeader)}
         {((display) => {
           if (display)
-          return (
-            <TouchableOpacity
-              onPress={this
+            return (
+              <TouchableOpacity
+                onPress={this
                 .searchButton
                 .bind(this)}>
-              <Icon style={styles.searchButtonStyle} name='search' size={20}/>
-            </TouchableOpacity>
-          );
-        }
+                <Icon style={styles.searchButtonStyle} name='search' size={20}/>
+              </TouchableOpacity>
+            );
+          }
         )(!UI.minimizedHeader)}
         {((display) => {
           if (display)
-          return (
-            <TouchableOpacity
-              onPress={this
-                    .mapButton
+            return (
+              <TouchableOpacity
+                onPress={this
+                .mapButton
                 .bind(this)}>
-              <Icon style={styles.mapButtonStyle} name='map' size={20}/>
-            </TouchableOpacity>
-          );
-        }
+                <Icon style={styles.mapButtonStyle} name='map' size={20}/>
+              </TouchableOpacity>
+            );
+          }
         )(!UI.minimizedHeader)}
         {((display) => {
-          if(display)
-          return (
-            <TouchableOpacity onPress={this
+          if (display)
+            return (
+              <TouchableOpacity
+                onPress={this
                 .settings
-              .bind(this)}>
-              <Icon style={styles.settingsButtonStyle} name='cog' size={20}/>
-            </TouchableOpacity>
-          )
+                .bind(this)}>
+                <Icon style={styles.settingsButtonStyle} name='cog' size={20}/>
+              </TouchableOpacity>
+            )
         })(!UI.minimizedHeader)}
-        <TouchableOpacity
-          onPress={this
-            .toggleHeader
-            .bind(this)}>
+        <TouchableOpacity onPress={this
+          .toggleHeader
+          .bind(this)}>
           <Icon
             style={styles.toggleButtonStyle}
             name={UI.minimizedHeader
-              ? 'chevron-right'
+            ? 'chevron-right'
             : 'chevron-left'}
             size={20}/>
         </TouchableOpacity>
@@ -207,7 +238,8 @@ class Header extends Component {
 Header.propTypes = {
   dispatch: React.PropTypes.func,
   UI: React.PropTypes.object,
-  headerText: React.PropTypes.string
+  headerText: React.PropTypes.string,
+  toRoute: React.PropTypes.func.isRequired
 };
 
 export default connect(state => state)(Header);
