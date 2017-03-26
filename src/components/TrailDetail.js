@@ -36,8 +36,8 @@ class TrailDetail extends React.Component {
     });
   }
   isDisplayed() {
-    const {userSession, trail} = this.props;
-    return false;
+    const {trail, userSession: {visibleFeatures}} = this.props;
+    return trail.list.every(({_id}) => visibleFeatures.indexOf(_id) > -1);
   }
   render() {
     const {trail} = this.props;

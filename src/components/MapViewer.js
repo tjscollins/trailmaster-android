@@ -12,6 +12,7 @@ import MapView from 'react-native-maps';
 
 /*----------Component----------*/
 import Header from './Header';
+import SaveButton from './SaveButton';
 
 /*----------StyleSheet----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -137,6 +138,7 @@ class MapViewer extends Component {
           </MapView>
         </View>
         <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
+        <SaveButton />
       </View>
     );
   }

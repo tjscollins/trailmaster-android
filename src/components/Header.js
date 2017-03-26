@@ -149,13 +149,13 @@ class Header extends Component {
         <Text style={styles.titleStyle}>{headerText}</Text>
         {((display) => {
           if (display)
-            return (
-              <TouchableOpacity
-                onPress={this
+          return (
+            <TouchableOpacity
+              onPress={this
                 .homeButton
                 .bind(this)}>
-                <Icon style={styles.homeButtonStyle} name='home' size={20}/>
-              </TouchableOpacity>
+              <Icon style={styles.homeButtonStyle} name='home' size={20}/>
+            </TouchableOpacity>
             );
           }
         )(!UI.minimizedHeader)}
