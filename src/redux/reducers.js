@@ -112,18 +112,11 @@ export const trailsReducer = (state={}, action) => {
         myTrails: [],
       };
     case 'SAVE_TRAIL':
-      const date = new Date();
-      const newTrail = {
-        list: action.list,
-        name: action.name,
-        desc: action.desc,
-        date: `${month(date.getMonth())} ${date.getFullYear()}`,
-      };
       return {
         ...state,
         myTrails: [
           ...state.myTrails,
-          newTrail,
+          action.trail,
         ],
       };
     default:
