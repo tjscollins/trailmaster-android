@@ -9,12 +9,12 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 /*----------Components----------*/
 import FeatureCard from './FeatureCard';
-import FeatureSection from './FeatureSection';
+import MapViewer from './MapViewer';
 
 /*----------Redux-----------*/
 import * as actions from '../redux/actions';
 
-class FeatureDetail extends React.Component {
+class TrailDetail extends React.Component {
   constructor() {
     super();
     this.selectFeature = this
@@ -22,8 +22,18 @@ class FeatureDetail extends React.Component {
       .bind(this);
   }
   selectFeature() {
-    // const {dispatch, trail} = this.props;
-    // dispatch(actions.toggleVisibility(trail._id));
+    const {dispatch, trail} = this.props;
+    dispatch(actions.clearMap());
+    trail.list.forEach(({_id}) => {
+      dispatch(actions.toggleVisibility(_id));
+    });
+    this.props.replaceRoute({
+      name: 'Map',
+      component: MapViewer,
+      statusBarProps: {
+        hidden: true,
+      }
+    });
   }
   isDisplayed() {
     const {userSession, trail} = this.props;
@@ -109,10 +119,11 @@ class FeatureDetail extends React.Component {
   }
 }
 
-FeatureDetail.propTypes = {
+TrailDetail.propTypes = {
   dispatch: React.PropTypes.func,
   trail: React.PropTypes.object,
   userSession: React.PropTypes.object,
+  replaceRoute: React.PropTypes.func.isRequired,
 };
 
-export default connect(state => state)(FeatureDetail);
+export default connect(state => state)(TrailDetail);

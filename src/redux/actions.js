@@ -28,13 +28,17 @@ export const updatePOS = (position) => {
   return {type: 'UPDATE_POS', position};
 };
 
+export const toggleVisibility = (id) => {
+  return {type: 'TOGGLE_VISIBILITY', id};
+};
+
+export const clearMap = () => {
+  return {type: 'CLEAR_MAP'};
+};
+
 // geoJSON actions
 export const replaceGeoJSON = (features) => {
   return {type: 'REPLACE_GEO_JSON', features};
-};
-
-export const toggleVisibility = (id) => {
-  return {type: 'TOGGLE_VISIBILITY', id};
 };
 
 //trails actions

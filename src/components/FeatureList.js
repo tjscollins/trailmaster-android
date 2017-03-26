@@ -46,6 +46,7 @@ FeatureList.propTypes = {
   // dispatch: React.PropTypes.func,
   // userSession: React.PropTypes.object,
   geoJSON: React.PropTypes.object,
+  replaceRoute: React.PropTypes.func,
 };
 
 export default connect(state => state)(FeatureList);

@@ -76,6 +76,11 @@ export const userSessionReducer = (state = {}, action) => {
             action.id
           ]
         };
+    case 'CLEAR_MAP':
+     return {
+       ...state,
+       visibleFeatures: []
+     };
     default:
       return state;
   }

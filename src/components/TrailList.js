@@ -20,7 +20,7 @@ class TrailList extends Component {
     trails: [],
   }
   componentWillMount() {
-    const trails = this.props.trails.myTrails.map((trail) => <TrailDetail key={trail._id + 'trail-list'} trail={trail}/>);
+    const trails = this.props.trails.myTrails.map((trail) => <TrailDetail replaceRoute={this.props.replaceRoute} key={trail._id + 'trail-list'} trail={trail}/>);
     this.setState({trails});
   }
   componentDidMount() {
@@ -38,7 +38,7 @@ class TrailList extends Component {
         console.log('New Trails: ', newTrails);
         if (newTrails.length !== trails.myTrails.length) {
           dispatch(actions.displayTrails(newTrails));
-          const trailList = newTrails.map((trail) => <TrailDetail key={trail._id + 'trail-list'} trail={trail}/>);
+          const trailList = newTrails.map((trail) => <TrailDetail replaceRoute={this.props.replaceRoute} key={trail._id + 'trail-list'} trail={trail}/>);
           this.setState({trails: trailList});
         }
       })
