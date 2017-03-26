@@ -46,7 +46,10 @@ const initialState = {
   },
   geoJSON: {
     features: [],
-  }
+  },
+  trails: {
+    myTrails: [],
+  },
 };
 
 const store = configureStore(initialState);

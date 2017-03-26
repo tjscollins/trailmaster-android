@@ -92,3 +92,40 @@ export const geoJSONReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const trailsReducer = (state={}, action) => {
+  switch (action.type) {
+    case 'DISPLAY_TRAILS':
+      const {trails} = action;
+      return {
+        ...state,
+        myTrails: trails,
+      };
+    case 'CLEAR_TRAILS':
+      return {
+        ...state,
+        myTrails: [],
+      };
+    case 'SAVE_TRAIL':
+      const date = new Date();
+      const newTrail = {
+        list: action.list,
+        name: action.name,
+        desc: action.desc,
+        date: `${month(date.getMonth())} ${date.getFullYear()}`,
+      };
+      return {
+        ...state,
+        myTrails: [
+          ...state.myTrails,
+          newTrail,
+        ],
+      };
+    default:
+      return state;
+  }
+};
+
+const month = (mo) => {
+  return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'][mo];
+};

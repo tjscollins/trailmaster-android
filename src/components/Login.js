@@ -27,7 +27,7 @@ class Login extends Component {
       headers: {'Content-type': 'application/json'},
     }).then((response) => {
       dispatch(actions.login(response.headers['x-auth'], response.data._id, email));
-      this.setState({email: '', password: ''});
+      // this.setState({email: '', password: ''});
       this.props.replaceRoute({
         name: 'HomeScreen',
         component: HomeScreen,

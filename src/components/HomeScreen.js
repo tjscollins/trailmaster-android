@@ -10,6 +10,7 @@ import * as actions from '../redux/actions';
 /*----------Components----------*/
 import Header from './Header';
 import Login from './Login';
+import TrailList from './TrailList';
 
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -100,7 +101,13 @@ class HomeScreen extends React.Component {
           {((isLoggedIn) => {
             if (isLoggedIn) {
               return (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.replaceRoute.bind(this, {
+                  name: 'TrailList',
+                  component: TrailList,
+                  statusBarProps: {
+                    hidden: true
+                  }
+                })}>
                   <View style={styles.buttonStyle}>
                     <Text style={styles.buttonTextStyle}>
                       {this.myTrailsText()}

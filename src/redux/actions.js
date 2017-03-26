@@ -36,3 +36,20 @@ export const replaceGeoJSON = (features) => {
 export const toggleVisibility = (id) => {
   return {type: 'TOGGLE_VISIBILITY', id};
 };
+
+//trails actions
+export const displayTrails = (trails) => {
+  return {type: 'DISPLAY_TRAILS', trails};
+};
+
+export const clearTrails = () => {
+  return {type: 'CLEAR_TRAILS'};
+};
+
+export const saveTrail = (list, name, desc) => {
+  return {type: 'SAVE_TRAIL', list, name, desc};
+};
+
+export const showTrail = (id) => {
+  return {type: 'SHOW_TRAIL', id};
+};
