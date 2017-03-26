@@ -157,8 +157,8 @@ class SaveButton extends Component {
             <View style={styles.modalStyle}>
               <TouchableOpacity
                 onPress={() => {
-                this.setState({trailModalVisible: true})
-              }}>
+                  this.setState({trailModalVisible: true})
+                }}>
                 <View style={styles.saveTrailButton}>
                   <Text style={styles.buttonTextStyle}>
                     Save Trail
@@ -168,8 +168,8 @@ class SaveButton extends Component {
 
               <TouchableOpacity
                 onPress={() => {
-                this.setState({mapModalVisible: true})
-              }}>
+                  this.setState({mapModalVisible: true})
+                }}>
                 <View style={styles.saveMapButton}>
                   <Text style={styles.buttonTextStyle}>
                     Save Map
@@ -179,8 +179,8 @@ class SaveButton extends Component {
 
               <TouchableOpacity
                 onPress={() => {
-                this.setModalVisible(!this.state.mainModalVisible)
-              }}>
+                  this.setModalVisible(!this.state.mainModalVisible)
+                }}>
                 <View style={styles.cancelButton}>
                   <Text style={styles.buttonTextStyle}>
                     Cancel
@@ -215,16 +215,74 @@ class SaveButton extends Component {
                 <TouchableOpacity
                   style={styles.saveTrailButton}
                   onPress={this
-                  .saveTrail
-                  .bind(this)}>
+                    .saveTrail
+                    .bind(this)}>
                   <Text style={styles.buttonTextStyle}>
                     Save
                   </Text>
                 </TouchableOpacity>
               </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({trailModalVisible: false})
+                  }}>
+                  <View style={styles.cancelButton}>
+                    <Text style={styles.buttonTextStyle}>
+                      Cancel
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+        </Modal>
 
+        <Modal
+          animationType={"fade"}
+          transparent={false}
+          visible={this.state.mapModalVisible}
+          onRequestClose={function() {}}>
+          <View style={styles.modalStyle}>
+            <View style={styles.trailFormStyle}>
+              <View style={styles.formRow}>
+                <TextInput
+                  autoFocus
+                  placeholder={'Name'}
+                  style={styles.formInput}
+                  onChangeText={name => this.setState({name})}/>
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  placeholder={'Description'}
+                  style={styles.formInput}
+                  onChangeText={desc => this.setState({desc})}/>
+              </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  style={styles.saveMapButton}
+                  onPress={this
+                    .saveMap
+                    .bind(this)}>
+                  <Text style={styles.buttonTextStyle}>
+                    Save
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({mapModalVisible: false})
+                  }}>
+                  <View style={styles.cancelButton}>
+                    <Text style={styles.buttonTextStyle}>
+                      Cancel
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </Modal>
 
         <TouchableOpacity onPress={this

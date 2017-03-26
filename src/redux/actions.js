@@ -36,6 +36,10 @@ export const clearMap = () => {
   return {type: 'CLEAR_MAP'};
 };
 
+export const storeRegion = (region) => {
+  return {type: 'STORE_REGION', region};
+};
+
 // geoJSON actions
 export const replaceGeoJSON = (features) => {
   return {type: 'REPLACE_GEO_JSON', features};

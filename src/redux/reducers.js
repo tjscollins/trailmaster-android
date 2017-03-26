@@ -81,6 +81,11 @@ export const userSessionReducer = (state = {}, action) => {
        ...state,
        visibleFeatures: []
      };
+    case 'STORE_REGION':
+      return {
+        ...state,
+        mapRegion: action.region
+      };
     default:
       return state;
   }

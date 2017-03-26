@@ -42,7 +42,8 @@ const initialState = {
     coords: {
       latitude: 15.15,
       longitude: 145.7
-    }
+    },
+    mapRegion: {}
   },
   geoJSON: {
     features: []
