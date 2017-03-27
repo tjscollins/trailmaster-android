@@ -15,7 +15,8 @@ EStyleSheet.build({
   $infoButtonColor: '#5bc0de',
   $successButtonColor: '#5cb85c',
   $warningButtonColor: '#f0ad4e',
-  $dangerButtonColor: '#d9534f'
+  $dangerButtonColor: '#d9534f',
+  $mapLabelColor: 'hsl(0, 50%, 40%)',
 });
 
 /*----------Components----------*/

@@ -43,9 +43,13 @@ class MapViewer extends Component {
           backgroundColor: '$featureMarkerColor'
         },
         labelMarker: {
-          fontSize: 10
+          fontSize: 10,
+          color: '$mapLabelColor',
         }
       });
+      const lineStyle = {
+        strokeColor: 'hsl(0, 50%, 40%)',
+      };
       if (type === 'Point') {
         const coords = {
           latitude: coordinates[1],
@@ -68,7 +72,7 @@ class MapViewer extends Component {
         });
         return (
           <View key={feature._id + 'map-marker'}>
-            <MapView.Polyline coordinates={coords}/>
+            <MapView.Polyline strokeColor={lineStyle.strokeColor} lineCap={lineStyle.lineCap} coordinates={coords}/>
             <MapView.Marker coordinate={coords[0]}>
               <Text style={styles.labelMarker}>
                 {name}
