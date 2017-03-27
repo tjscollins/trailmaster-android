@@ -1,6 +1,6 @@
 /*----------React----------*/
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, AsyncStorage} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 /*----------Redux----------*/
@@ -18,22 +18,6 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 class HomeScreen extends React.Component {
   constructor() {
     super();
-  }
-  componentWillMount() {
-    const {userSession} = this.props;
-    if(!userSession.xAuth) {
-      this.loadLoginData();
-    }
-  }
-  async loadLoginData() {
-    const {dispatch} = this.props;
-    const authInfo = await AsyncStorage.getItem('trailmaster-login');
-    console.log('xAuth Info: ', authInfo,);
-    if (authInfo) {
-      const {xAuth, _id, email} = JSON.parse(authInfo)
-      console.log('xAuth Info: ', authInfo, xAuth, _id, email);
-      dispatch(actions.login(xAuth, _id, email));
-    }
   }
   showLogin() {
     this

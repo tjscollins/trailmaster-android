@@ -94,6 +94,7 @@ export const userSessionReducer = (state = {}, action) => {
 export const geoJSONReducer = (state = {}, action) => {
   switch (action.type) {
     case 'REPLACE_GEO_JSON':
+      AsyncStorage.setItem('geoJSON-features', JSON.stringify(action.features))
       return {
         ...state,
         features: action.features

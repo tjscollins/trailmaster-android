@@ -4,6 +4,7 @@ import {View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import axios from 'axios';
+import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
 
 /*----------Components----------*/
 import TrailDetail from './TrailDetail';
@@ -16,12 +17,13 @@ import * as actions from '../redux/actions';
 // import {fetchData, validateServerData} from '../api/TrailmasterAPI';
 
 class TrailList extends Component {
-  state = {
-    trails: [],
-  }
-  componentWillMount() {
-    const trails = this.props.trails.myTrails.map((trail) => <TrailDetail replaceRoute={this.props.replaceRoute} key={trail._id + 'trail-list'} trail={trail}/>);
-    this.setState({trails});
+  constructor() {
+    super();
+    this.state = {
+      featureList: [],
+      trails: []
+    }
+    loaderHandler.showLoader('Loading');
   }
   componentDidMount() {
     const {xAuth} = this.props.userSession;
@@ -33,18 +35,35 @@ class TrailList extends Component {
       }
     })
       .then((response) => {
-        const newTrails = response.data
-          .trails;
+        const newTrails = response.data.trails;
         console.log('New Trails: ', newTrails);
         if (newTrails.length !== trails.myTrails.length) {
           dispatch(actions.displayTrails(newTrails));
-          const trailList = newTrails.map((trail) => <TrailDetail replaceRoute={this.props.replaceRoute} key={trail._id + 'trail-list'} trail={trail}/>);
+          const trailList = newTrails.map((trail) => <TrailDetail
+            replaceRoute={this.props.replaceRoute}
+            key={trail._id + 'trail-list'}
+            trail={trail}/>);
           this.setState({trails: trailList});
         }
       })
       .catch((error) => {
         console.log('Error fetching trails: ', error);
       })
+  }
+  componentWillReceiveProps(nextProps) {
+    if(this.state.trails.length !== nextProps.trails.myTrails.length) {
+      const trails = nextProps
+      .trails
+      .myTrails
+      .map((trail) => <TrailDetail
+        replaceRoute={this.props.replaceRoute}
+        key={trail._id + 'trail-list'}
+        trail={trail}/>);
+        if (trails.length > 0) {
+          loaderHandler.hideLoader();
+        }
+        this.setState({trails});
+    }
   }
   render() {
     const styles = EStyleSheet.create({scrollViewStyle: {}});

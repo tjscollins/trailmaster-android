@@ -1,6 +1,6 @@
 /*----------Modules----------*/
 import React, {Component} from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, Text} from 'react-native';
 import {connect} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -16,6 +16,7 @@ import Header from './Header';
 
 class FeatureList extends Component {
   renderGeoJSON() {
+    console.log('FeatureList: ', this.props.geoJSON.features)
     return this
       .props
       .geoJSON
@@ -33,6 +34,7 @@ class FeatureList extends Component {
         <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
 
         <ScrollView style={styles.scrollViewStyle}>
+          {/* <Text>{JSON.stringify(this.props.geoJSON.features[0])}</Text> */}
           {this.renderGeoJSON()}
         </ScrollView>
       </View>

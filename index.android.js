@@ -47,7 +47,7 @@ const initialState = {
     mapRegion: {}
   },
   geoJSON: {
-    features: []
+    features: [],
   },
   trails: {
     myTrails: []
@@ -56,16 +56,7 @@ const initialState = {
 
 const store = configureStore(initialState);
 
-const {coords, distanceFilter} = store
-  .getState()
-  .userSession;
-fetchData(coords.latitude, coords.longitude, distanceFilter).then((features) => {
-  // console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
-  console.log('Received features', features);
-  store.dispatch(actions.replaceGeoJSON(features));
-}).catch((error) => {
-  throw error;
-});
+
 
 //Initialize User Location Monitoring
 const processGeolocation = (pos) => {
@@ -106,11 +97,15 @@ const geolocationError = (err) => {
   console.error('Error tracking user position', err);
 };
 
+navigator.geolocation.getCurrentPosition(processGeolocation, geolocationError, {
+  timeout: 15000,
+});
+
 navigator
   .geolocation
   .watchPosition(processGeolocation, geolocationError, {
     timeout: 60000,
-    // enableHighAccuracy: true,
+    enableHighAccuracy: true,
   });
 
 // Create a Component
