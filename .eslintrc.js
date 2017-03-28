@@ -24,6 +24,7 @@ module.exports = {
     "import/no-namespace": "off",
     "no-case-declarations": "off",
     "arrow-body-style": "off",
+    "no-console":"warn",
   },
   "settings": {
   }

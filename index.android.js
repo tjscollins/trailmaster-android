@@ -2,7 +2,7 @@
 
 /* ----------Modules---------- */
 import React from 'react';
-import {AppRegistry, AsyncStorage} from 'react-native';
+import {AppRegistry} from 'react-native';
 import {Provider} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -27,7 +27,7 @@ import configureStore from './src/redux/configureStore';
 import * as actions from './src/redux/actions';
 
 /*----------API----------*/
-import {positionChanged, fetchData, validateServerData} from './src/api/TrailmasterAPI';
+import {positionChanged, fetchData} from './src/api/TrailmasterAPI';
 
 const initialState = {
   UI: {
@@ -53,13 +53,12 @@ const initialState = {
     features: [],
   },
   trails: {
-    myTrails: []
+    myTrails: [],
+    myMaps: [],
   }
 };
 
 const store = configureStore(initialState);
-
-
 
 //Initialize User Location Monitoring
 const processGeolocation = (pos) => {
@@ -73,24 +72,13 @@ const processGeolocation = (pos) => {
     }
   } = store.getState();
   const ONE_TENTH = 528; // Convert miles to one tenth distance in feet
-  if (positionChanged({
-    latitude,
-    longitude
-  }, pos, 5)) {
-    console.log('positionChanged', pos);
+  if (positionChanged({latitude, longitude}, pos, 5)) {
     store.dispatch(actions.updatePOS(pos));
   }
-  if (positionChanged({
-    latitude,
-    longitude
-  }, pos, distanceFilter * ONE_TENTH)) {
-    fetchData(pos.coords.latitude, pos.coords.longitude, distanceFilter).then((features) => {
-      // console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
-      // console.log('Received features', features);
-      store.dispatch(actions.replaceGeoJSON(features));
-    }).catch((error) => {
-      throw error;
-    });
+  if (positionChanged({latitude, longitude}, pos, distanceFilter * ONE_TENTH)) {
+    fetchData(pos.coords.latitude, pos.coords.longitude, distanceFilter)
+      .then((features) => store.dispatch(actions.replaceGeoJSON(features)))
+      .catch(console.error);
   }
   // if (store.getState().userSession.trackingRoute)
   // store.dispatch(actions.addToRouteList(pos));
@@ -104,12 +92,13 @@ navigator.geolocation.getCurrentPosition(processGeolocation, geolocationError, {
   timeout: 15000,
 });
 
-navigator
+const watcher = navigator
   .geolocation
   .watchPosition(processGeolocation, geolocationError, {
     timeout: 60000,
     enableHighAccuracy: true,
   });
+store.dispatch(actions.watchGPS(watcher));
 
 // Create a Component
 const App = () => (

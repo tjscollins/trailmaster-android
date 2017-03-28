@@ -21,7 +21,6 @@ class TrailList extends Component {
   constructor() {
     super();
     this.state = {
-      // trails: [],
       searchText: ''
     }
   }

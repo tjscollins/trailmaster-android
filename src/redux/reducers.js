@@ -49,6 +49,14 @@ export const userSessionReducer = (state = {}, action) => {
         _id: null,
         email: null
       };
+    case 'WATCH_GPS':
+      return {
+        ...state,
+        gpsTracking: {
+          ...state.gpsTracking,
+          watcher: action.watcher,
+        },
+      };
     case 'UPDATE_POS':
       AsyncStorage.setItem(`coords-${state.email}`, JSON.stringify(action.position.coords));
       return {

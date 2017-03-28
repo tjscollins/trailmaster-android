@@ -24,6 +24,10 @@ export const logout = () => {
   return {type: 'LOGOUT'};
 };
 
+export const watchGPS = (watcher) => {
+  return {type: 'WATCH_GPS', watcher};
+};
+
 export const updatePOS = (position) => {
   return {type: 'UPDATE_POS', position};
 };
