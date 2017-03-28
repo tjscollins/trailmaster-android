@@ -23,6 +23,7 @@ module.exports = {
   "rules": {
     "import/no-namespace": "off",
     "no-case-declarations": "off",
+    "arrow-body-style": "off",
   },
   "settings": {
   }

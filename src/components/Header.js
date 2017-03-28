@@ -19,16 +19,20 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 class Header extends Component {
   constructor() {
     super();
-    this.headerButtonPress = this.headerButtonPress.bind(this);
+    this.headerButtonPress = this
+      .headerButtonPress
+      .bind(this);
   }
   headerButtonPress(name, component) {
-    this.props.toRoute({
-      name,
-      component,
-      statusBarProps: {
-        hidden: true,
-      }
-    });
+    this
+      .props
+      .toRoute({
+        name,
+        component,
+        statusBarProps: {
+          hidden: true
+        }
+      });
   }
   render() {
     const {headerText, UI, dispatch} = this.props;
@@ -82,46 +86,22 @@ class Header extends Component {
         color: '#aaa'
       }
     });
-    const homeButtonProps = {
-      touchProps: {
-        onPress: () => this.headerButtonPress('Home', HomeScreen)
-      },
-      iconProps: {
-        style: styles.homeButtonStyle,
-        name: 'home',
-        size: 20
-      }
+    const buttonProps = (name, component, style) => {
+      return {
+        touchProps: {
+          onPress: () => this.headerButtonPress(name, component)
+        },
+        iconProps: {
+          style,
+          name,
+          size: 20
+        }
+      };
     };
-    const searchButtonProps = {
-      touchProps: {
-        onPress: () => this.headerButtonPress('Search', FeatureList)
-      },
-      iconProps: {
-        style: styles.searchButtonStyle,
-        name: 'search',
-        size: 20
-      }
-    };
-    const mapButtonProps = {
-      touchProps: {
-        onPress: () => this.headerButtonPress('MapViewer', MapViewer)
-      },
-      iconProps: {
-        style: styles.mapButtonStyle,
-        name: 'map',
-        size: 20
-      }
-    };
-    const settingsButtonProps = {
-      touchProps: {
-        onPress: () => this.headerButtonPress('Settings', Settings)
-      },
-      iconProps: {
-        style: styles.settingsButtonStyle,
-        name: 'cog',
-        size: 20
-      }
-    };
+    const homeButtonProps = buttonProps('home', HomeScreen, styles.homeButtonStyle);
+    const searchButtonProps = buttonProps('search', FeatureList, styles.searchButtonStyle);
+    const mapButtonProps = buttonProps('map', MapViewer, styles.mapButtonStyle);
+    const settingsButtonProps = buttonProps('cog', Settings, styles.settingsButtonStyle);
     const toggleHeaderButtonProps = {
       touchProps: {
         onPress: () => dispatch(actions.toggleHeader())
@@ -129,8 +109,8 @@ class Header extends Component {
       iconProps: {
         style: styles.toggleButtonStyle,
         name: UI.minimizedHeader
-        ? 'chevron-right'
-      : 'chevron-left',
+          ? 'chevron-right'
+          : 'chevron-left',
         size: 20
       }
     }
@@ -140,13 +120,19 @@ class Header extends Component {
         {((showButtons) => {
           if (showButtons)
             return [
-              <FontAwesomeButton key='homeButton' {...homeButtonProps}/>,
-          <FontAwesomeButton key='searchButton' {...searchButtonProps} />,
-          <FontAwesomeButton key='mapButton' {...mapButtonProps} />,
-          <FontAwesomeButton key='settingsButton' {...settingsButtonProps} />,
-          ];
-        })(!UI.minimizedHeader)}
-        <FontAwesomeButton key='toggleHeader' {...toggleHeaderButtonProps} />
+              <FontAwesomeButton key = 'homeButton' {
+                ...homeButtonProps
+              } />, <FontAwesomeButton key = 'searchButton' {
+                ...searchButtonProps
+              } />, <FontAwesomeButton key = 'mapButton' {
+                ...mapButtonProps
+              } />, <FontAwesomeButton key = 'settingsButton' {
+                ...settingsButtonProps
+              } />
+            ];
+          }
+        )(!UI.minimizedHeader)}
+        <FontAwesomeButton key='toggleHeader' {...toggleHeaderButtonProps}/>
       </View>
     );
   }
