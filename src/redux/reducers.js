@@ -65,9 +65,7 @@ export const userSessionReducer = (state = {}, action) => {
           ...state,
           visibleFeatures: state
             .visibleFeatures
-            .filter((id) => {
-              return id !== action.id;
-            })
+            .filter((id) => id !== action.id)
         }
         : {
           ...state,
@@ -145,6 +143,4 @@ export const staticMapsReducer = (state={}, action) => {
   }
 }
 
-const month = (mo) => {
-  return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'][mo];
-};
+const month = (mo) => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'][mo];

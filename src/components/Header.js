@@ -108,7 +108,7 @@ class Header extends Component {
       },
       iconProps: {
         style: styles.mapButtonStyle,
-        name: 'search',
+        name: 'map',
         size: 20
       }
     };
@@ -118,7 +118,7 @@ class Header extends Component {
       },
       iconProps: {
         style: styles.settingsButtonStyle,
-        name: 'search',
+        name: 'cog',
         size: 20
       }
     };

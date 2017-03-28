@@ -45,11 +45,13 @@ class Trailmaster extends React.Component {
   async loadLoginData() {
     const {dispatch} = this.props;
     const authInfo = await AsyncStorage.getItem('trailmaster-login');
-    console.log('xAuth Info: ', authInfo,);
     if (authInfo) {
       const {xAuth, _id, email} = JSON.parse(authInfo)
-      console.log('xAuth Info: ', authInfo, xAuth, _id, email);
       dispatch(actions.login(xAuth, _id, email));
+      const trails = await AsyncStorage.getItem(`trails-${email}`);
+      if (trails.length > 0) {
+        dispatch(actions.displayTrails(JSON.parse(trails)));
+      }
     }
   }
   render() {

@@ -1,6 +1,6 @@
 /*----------Modules----------*/
 import React, {Component} from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, AsyncStorage} from 'react-native';
 import {connect} from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import axios from 'axios';
@@ -25,9 +25,22 @@ class TrailList extends Component {
     }
     loaderHandler.showLoader('Loading');
   }
+  componentWillMount() {
+    if(this.state.trails.length !== this.props.trails.myTrails.length) {
+      console.log('TrailList: ', this.state.trails, typeof this.props.trails.myTrails)
+      const trails = this.props.trails.myTrails.map((trail) => <TrailDetail
+        replaceRoute={this.props.replaceRoute}
+        key={trail._id + 'trail-list'}
+        trail={trail}/>);
+        if (trails.length > 0) {
+          loaderHandler.hideLoader();
+        }
+        this.setState({trails});
+    }
+  }
   componentDidMount() {
-    const {xAuth} = this.props.userSession;
-    const {trails, dispatch} = this.props;
+    const {xAuth, email} = this.props.userSession;
+    const {trails, dispatch, replaceRoute} = this.props;
     axios
       .get('https://trailmaster.herokuapp.com/trails', {
       headers: {
@@ -36,11 +49,11 @@ class TrailList extends Component {
     })
       .then((response) => {
         const newTrails = response.data.trails;
-        console.log('New Trails: ', newTrails);
         if (newTrails.length !== trails.myTrails.length) {
+          AsyncStorage.setItem(`trails-${email}`, JSON.stringify(newTrails));
           dispatch(actions.displayTrails(newTrails));
           const trailList = newTrails.map((trail) => <TrailDetail
-            replaceRoute={this.props.replaceRoute}
+            replaceRoute={replaceRoute}
             key={trail._id + 'trail-list'}
             trail={trail}/>);
           this.setState({trails: trailList});
@@ -68,9 +81,7 @@ class TrailList extends Component {
   render() {
     const styles = EStyleSheet.create({scrollViewStyle: {}});
     return (
-      <View style={{
-        flex: 1
-      }}>
+      <View style={{flex: 1}}>
         <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
 
         <ScrollView style={styles.scrollViewStyle}>

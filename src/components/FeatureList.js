@@ -16,7 +16,7 @@ import Header from './Header';
 
 class FeatureList extends Component {
   renderGeoJSON() {
-    console.log('FeatureList: ', this.props.geoJSON.features)
+    // console.log('FeatureList: ', this.props.geoJSON.features)
     return this
       .props
       .geoJSON
@@ -32,7 +32,6 @@ class FeatureList extends Component {
         flex: 1
       }}>
         <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
-
         <ScrollView style={styles.scrollViewStyle}>
           {/* <Text>{JSON.stringify(this.props.geoJSON.features[0])}</Text> */}
           {this.renderGeoJSON()}
