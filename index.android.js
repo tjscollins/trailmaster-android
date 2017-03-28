@@ -39,7 +39,10 @@ const initialState = {
     distanceFilter: 50,
     trackingRoute: false,
     routeList: [],
-    mapCentering: false,
+    gpsTracking: {
+      enabled: true,
+      watcher: null,
+    },
     coords: {
       latitude: 0,
       longitude: 0
