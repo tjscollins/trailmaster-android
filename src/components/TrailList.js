@@ -24,7 +24,7 @@ class TrailList extends Component {
     }
   }
   loadTrailsFromProps(props) {
-    const myTrails = props ? props.trails.myTrails : this.props.trails.myTrails;
+    const {myTrails} = props ? props.trails : this.props.trails;
     if(this.state.trails.length !== myTrails.length) {
       const trails = myTrails.map((trail) => <TrailDetail
         replaceRoute={this.props.replaceRoute}

@@ -41,8 +41,8 @@ const initialState = {
     routeList: [],
     mapCentering: false,
     coords: {
-      latitude: 15.15,
-      longitude: 145.7
+      latitude: 0,
+      longitude: 0
     },
     mapRegion: {}
   },
@@ -82,8 +82,8 @@ const processGeolocation = (pos) => {
     longitude
   }, pos, distanceFilter * ONE_TENTH)) {
     fetchData(pos.coords.latitude, pos.coords.longitude, distanceFilter).then((features) => {
-      console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
-      console.log('Received features', features);
+      // console.log('Fetching data near: ', pos.coords, 'within: ', distanceFilter);
+      // console.log('Received features', features);
       store.dispatch(actions.replaceGeoJSON(features));
     }).catch((error) => {
       throw error;

@@ -50,6 +50,7 @@ export const userSessionReducer = (state = {}, action) => {
         email: null
       };
     case 'UPDATE_POS':
+      AsyncStorage.setItem(`coords-${state.email}`, JSON.stringify(action.position.coords));
       return {
         ...state,
         coords: {

@@ -25,7 +25,7 @@ import * as actions from './redux/actions';
 class Trailmaster extends React.Component {
   componentWillMount() {
     const {userSession, geoJSON} = this.props;
-    if(!userSession.coords.latitude) {
+    if(userSession.coords.latitude === 0 && userSession.coords.longitude === 0) {
       this.loadCachedGPS();
     }
     if(!userSession.xAuth) {
@@ -41,7 +41,13 @@ class Trailmaster extends React.Component {
       this.props.dispatch(actions.replaceGeoJSON(JSON.parse(features)));
     }
   }
-  async loadCachedGPS() {}
+  async loadCachedGPS() {
+    const {dispatch, userSession: {email}} = this.props;
+    const coords = await AsyncStorage.getItem(`coords-${email}`)
+    if (coords) {
+      dispatch(actions.updatePOS({coords: JSON.parse(coords)}));
+    }
+  }
   async loadLoginData() {
     const {dispatch} = this.props;
     const authInfo = await AsyncStorage.getItem('trailmaster-login');
@@ -57,7 +63,7 @@ class Trailmaster extends React.Component {
   render() {
     const styles = EStyleSheet.create({
       bgStyle: {
-        backgroundColor: '#eee',
+        backgroundColor: '#f0f0f0',
       }
     });
     return (
