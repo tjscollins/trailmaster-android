@@ -21,6 +21,7 @@ module.exports = {
     'react-native'
   ],
   "rules": {
+    "import/no-namespace": "off",
   },
   "settings": {
   }
