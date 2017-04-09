@@ -31,6 +31,10 @@
     "react-test-renderer": "15.4.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testRegex": "./__tests__/[^setup].*.js$",
+    "setupFiles": [
+      "./__tests__/setup.js"
+    ]
   }
 }
