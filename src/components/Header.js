@@ -16,7 +16,7 @@ import FontAwesomeButton from './common/FontAwesomeButton';
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-class Header extends Component {
+export class Header extends Component {
   constructor() {
     super();
     this.headerButtonPress = this

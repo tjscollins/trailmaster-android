@@ -62,6 +62,25 @@ class HomeScreen extends React.Component {
   savedMapsText() {
     return 'View Saved Maps';
   }
+  visibleButtons = (isLoggedIn, styles) => {
+    if (isLoggedIn) {
+      return (
+        <TouchableOpacity onPress={this.props.replaceRoute.bind(this, {
+          name: 'TrailList',
+          component: TrailList,
+          statusBarProps: {
+            hidden: true
+          }
+        })}>
+          <View style={styles.buttonStyle}>
+            <Text style={styles.buttonTextStyle}>
+              {this.myTrailsText()}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  }
   render() {
     const {xAuth} = this.props.userSession;
     const styles = EStyleSheet.create({
@@ -98,26 +117,8 @@ class HomeScreen extends React.Component {
       }}>
         <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
         <View style={styles.containerStyle}>
-          {((isLoggedIn) => {
-            if (isLoggedIn) {
-              return (
-                <TouchableOpacity onPress={this.props.replaceRoute.bind(this, {
-                  name: 'TrailList',
-                  component: TrailList,
-                  statusBarProps: {
-                    hidden: true
-                  }
-                })}>
-                  <View style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>
-                      {this.myTrailsText()}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
-          })(xAuth)}
-          {((isLoggedIn) => {
+          {this.visibleButtons(xAuth, styles)}
+          {/* {((isLoggedIn) => {
             if (isLoggedIn) {
               return (
                 <TouchableOpacity>
@@ -129,7 +130,7 @@ class HomeScreen extends React.Component {
                 </TouchableOpacity>
               );
             }
-          })(xAuth)}
+          })(xAuth)} */}
           <TouchableOpacity onPress={xAuth ? this.logout.bind(this) : this
             .showLogin
             .bind(this)}>
