@@ -80,7 +80,7 @@ class FeatureList extends Component {
     const refreshButtonProps = {
       touchProps: {
         onPress: () => {
-          loaderHandler.showLoader('Loading');
+          loaderHandler.showLoader();
           this.reloadGeoJSON({
             geoJSON: {
               features: [],

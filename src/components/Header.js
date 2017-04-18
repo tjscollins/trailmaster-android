@@ -1,6 +1,6 @@
 /*----------React----------*/
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Navigator} from 'react-native';
 
 /*----------Redux----------*/
 import {connect} from 'react-redux';
@@ -12,27 +12,26 @@ import FeatureList from './FeatureList';
 import MapViewer from './MapViewer';
 import Settings from './Settings';
 import FontAwesomeButton from './common/FontAwesomeButton';
+import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
 
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export class Header extends Component {
-  constructor() {
-    super();
-    this.headerButtonPress = this
-      .headerButtonPress
-      .bind(this);
-  }
   headerButtonPress(name, component) {
-    this
-      .props
-      .toRoute({
-        name,
-        component,
-        statusBarProps: {
-          hidden: true
-        }
-      });
+    loaderHandler.showLoader(`Loading ${name}`);
+    setTimeout(() => {
+      this
+        .props
+        .toRoute({
+          name,
+          component,
+          statusBarProps: {
+            hidden: true
+          },
+        });
+        loaderHandler.hideLoader();
+    }, 0)
   }
   render() {
     const {headerText, UI, dispatch} = this.props;
@@ -87,9 +86,11 @@ export class Header extends Component {
       }
     });
     const buttonProps = (name, component, style) => {
+      let route = name === 'cog' ? 'settings' : name;
+      route = route[0].toUpperCase() + route.slice(1);
       return {
         touchProps: {
-          onPress: () => this.headerButtonPress(name, component)
+          onPress: () => this.headerButtonPress(route, component)
         },
         iconProps: {
           style,

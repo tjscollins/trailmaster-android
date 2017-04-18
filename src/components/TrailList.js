@@ -87,7 +87,7 @@ class TrailList extends Component {
     const refreshButtonProps = {
       touchProps: {
         onPress: () => {
-          loaderHandler.showLoader('Loading');
+          loaderHandler.showLoader();
           this.loadTrailsFromProps({
             trails: {
               myTrails: []
