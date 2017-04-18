@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import * as actions from '../redux/actions';
 
 /*----------Components----------*/
+import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
 // import HomeScreen from './HomeScreen'; import FeatureList from
 // './FeatureList'; import MapViewer from './MapViewer';
 
@@ -22,21 +23,27 @@ class SaveButton extends Component {
   state = {
     mainModalVisible: false,
     trailModalVisible: false,
-    mapModalVisible: false
+    mapModalVisible: false,
+    error: '',
+    name: '',
+    desc: '',
   }
-
-  setModalVisible(visible) {
-    this.setState({mainModalVisible: visible});
+  errorMessage() {
+    const {error} = this.state;
+    console.log(this.state.error);
+    if (/400/.test(error)) {
+      return ``
+    }
+    return this.state.error;
   }
-
   save() {
-    console.log('Pressed save!');
-    this.setModalVisible(true);
+    this.setState({mainModalVisible: true});
   }
   saveTrail() {
     const {dispatch, geoJSON, userSession} = this.props;
     const {xAuth} = userSession;
     const {name, desc} = this.state;
+
     const trailList = geoJSON
       .features
       .filter((point) => {
@@ -44,23 +51,39 @@ class SaveButton extends Component {
           .visibleFeatures
           .indexOf(point._id) > -1;
       });
+      // Validate Form Fields:
+      if (name.length < 1 || desc.length < 1) {
+        this.setState({error: 'Both name and description of the trail are required'});
+        return;
+      }
+
+      // Verify that trail is not empty
+      if (trailList.length < 1) {
+        this.setState({error: 'Trails must include at least one point of interest or route'});
+        return;
+      }
     const date = new Date();
     const newTrail = {
       list: trailList,
-      name: name,
-      desc: desc,
+      name,
+      desc,
       date: `${month(date.getMonth())} ${date.getFullYear()}`
     };
-    const send = axios.post('https://trailmaster.herokuapp.com/trails', newTrail, {
+    this.setState({trailModalVisible: false, mainModalVisible: false});
+    loaderHandler.showLoader();
+    axios.post('https://trailmaster.herokuapp.com/trails', newTrail, {
       headers: {
         'Content-type': 'application/json',
         'x-auth': xAuth
       }
-    }).then((response) => {
+    }).then((newTrail) => {
       dispatch(actions.saveTrail(newTrail));
       this.setState({mainModalVisible: false, trailModalVisible: false})
+      loaderHandler.hideLoader();
     }).catch((error) => {
-      console.log('Error posting new trail', error);
+      this.setState({trailModalVisible: true, error: error.message});
+      loaderHandler.hideLoader();
+      // console.error('Error posting new trail', error);
     });
   }
   saveMap() {
@@ -98,12 +121,15 @@ class SaveButton extends Component {
     // });
   }
   render() {
-    const {UI} = this.props;
+    // const {UI} = this.props;
     const styles = EStyleSheet.create({
       buttonStyle: {
         position: 'absolute',
         bottom: 20,
         right: 20
+      },
+      errorStyle: {
+        color: 'red',
       },
       modalStyle: {
         top: '25%',
@@ -111,7 +137,6 @@ class SaveButton extends Component {
         height: '50%',
         width: '50%',
         marginTop: 22,
-        elevation: 1000,
         backgroundColor: 'white',
         alignItems: 'center'
       },
@@ -167,8 +192,6 @@ class SaveButton extends Component {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // borderBottomWidth: 1, borderColor: '#ddd',
-
       },
       formLabel: {
         width: 75,
@@ -212,7 +235,7 @@ class SaveButton extends Component {
 
               <TouchableOpacity
                 onPress={() => {
-                  this.setModalVisible(!this.state.mainModalVisible)
+                  this.setState({mainModalVisible: false})
                 }}>
                 <View style={styles.cancelButton}>
                   <Text style={styles.buttonTextStyle}>
@@ -230,6 +253,9 @@ class SaveButton extends Component {
           visible={this.state.trailModalVisible}
           onRequestClose={function() {}}>
           <View style={styles.modalStyle}>
+            <Text style={styles.errorStyle}>
+              {this.errorMessage()}
+            </Text>
             <View style={styles.trailFormStyle}>
               <View style={styles.formRow}>
                 <TextInput
