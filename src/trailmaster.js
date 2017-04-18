@@ -31,7 +31,7 @@ class Trailmaster extends React.Component {
     if(!userSession.xAuth) {
       this.loadLoginData();
     }
-    if(geoJSON.features.length == 0) {
+    if(geoJSON.features.length === 0) {
       this.loadCachedGeoJSON();
     }
   }
@@ -76,7 +76,7 @@ class Trailmaster extends React.Component {
 }
 
 Trailmaster.propTypes = {
-  UI: React.PropTypes.object,
+  // UI: React.PropTypes.object,
   userSession: React.PropTypes.object,
   geoJSON: React.PropTypes.object,
   dispatch: React.PropTypes.func,
