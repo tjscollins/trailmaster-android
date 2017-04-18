@@ -222,7 +222,7 @@ class SaveButton extends Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
                   this.setState({mapModalVisible: true})
                 }}>
@@ -231,7 +231,7 @@ class SaveButton extends Component {
                     Save Map
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <TouchableOpacity
                 onPress={() => {

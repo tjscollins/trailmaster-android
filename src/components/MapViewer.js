@@ -82,7 +82,7 @@ class MapViewer extends Component {
         );
       }
     });
-    console.log('Displaying Features: ', array);
+    // console.log('Displaying Features: ', array);
     return array;
   }
   storeRegion(newRegion) {
