@@ -1,5 +1,8 @@
+/*----------Modules----------*/
+import uuid from 'uuid';
+
 /*----------React----------*/
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,14 +14,12 @@ import * as actions from '../redux/actions';
 import Header from './Header';
 import Login from './Login';
 import TrailList from './TrailList';
+import AddFeatureButton from './AddFeatureButton';
 
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-class HomeScreen extends React.Component {
-  constructor() {
-    super();
-  }
+class HomeScreen extends Component {
   showLogin() {
     this
       .props
@@ -34,19 +35,19 @@ class HomeScreen extends React.Component {
     const {email} = this.props.userSession;
     if (email) {
       return (
-        <View style={styles.buttonStyle}>
-          <Text style={styles.buttonTextStyle}>
+        <View style={styles.loginButtonStyle}>
+          <Text style={styles.loginButtonTextStyle}>
             Logout
           </Text>
-          <Text style={styles.buttonTextStyle}>
+          <Text style={styles.loginButtonTextStyle}>
             {email}
           </Text>
         </View>
       );
     } else {
       return (
-        <View style={styles.buttonStyle}>
-          <Text style={styles.buttonTextStyle}>
+        <View style={styles.loginButtonStyle}>
+          <Text style={styles.loginButtonTextStyle}>
             Login
           </Text>
         </View>
@@ -56,37 +57,46 @@ class HomeScreen extends React.Component {
   logout() {
     this.props.dispatch(actions.logout());
   }
-  myTrailsText() {
-    return 'View My Trails';
-  }
   savedMapsText() {
     return 'View Saved Maps';
   }
   visibleButtons = (isLoggedIn, styles) => {
+    const {replaceRoute} = this.props;
     if (isLoggedIn) {
-      return (
-        <TouchableOpacity onPress={this.props.replaceRoute.bind(this, {
-          name: 'TrailList',
-          component: TrailList,
-          statusBarProps: {
-            hidden: true
-          }
-        })}>
+      return [
+        <AddFeatureButton
+          key={uuid()}
+          styles={styles}
+          text={'Add PoI'} />,
+        <AddFeatureButton
+          key={uuid()}
+          styles={styles}
+          text={'Add Route'} />,
+        <TouchableOpacity
+          key={uuid()}
+          onPress={replaceRoute.bind(this, {
+            name: 'TrailList',
+            component: TrailList,
+            statusBarProps: {
+              hidden: true
+            }
+          })}>
           <View style={styles.buttonStyle}>
             <Text style={styles.buttonTextStyle}>
-              {this.myTrailsText()}
+              View My Trails
             </Text>
           </View>
         </TouchableOpacity>
-      );
+      ];
     }
   }
   render() {
+    const {logout, showLogin, visibleButtons, props: {replaceRoute}} = this;
     const {xAuth} = this.props.userSession;
     const styles = EStyleSheet.create({
       buttonStyle: {
         aspectRatio: 2,
-        backgroundColor: 'white',
+        backgroundColor: '$infoButtonColor',
         borderColor: '#ddd',
         borderRadius: 2,
         borderWidth: 1,
@@ -101,7 +111,48 @@ class HomeScreen extends React.Component {
       },
       buttonTextStyle: {
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 20,
+        color: 'white',
+      },
+      featureButtonStyle: {
+        aspectRatio: 2,
+        backgroundColor: '$primaryButtonColor',
+        borderColor: '#ddd',
+        borderRadius: 2,
+        borderWidth: 1,
+        elevation: 1,
+        flex: 1,
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 0,
+        maxHeight: '$homeScreenButtonHeight',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+      },
+      featureButtonTextStyle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: 'white',
+      },
+      loginButtonStyle: {
+        aspectRatio: 2,
+        backgroundColor: '$dangerButtonColor',
+        borderColor: '#ddd',
+        borderRadius: 2,
+        borderWidth: 1,
+        elevation: 1,
+        flex: 1,
+        marginTop: 15,
+        marginLeft: 30,
+        marginRight: 0,
+        maxHeight: '$homeScreenButtonHeight',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+      },
+      loginButtonTextStyle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: 'white',
       },
       containerStyle: {
         flex: 1,
@@ -109,31 +160,21 @@ class HomeScreen extends React.Component {
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap'
+      },
+      topLevelStyle: {
+        flex: 1,
       }
     });
     return (
-      <View style={{
-        flex: 1
-      }}>
-        <Header toRoute={this.props.replaceRoute} headerText={'Trailmaster'}/>
+      <View style={styles.topLevelStyle}>
+        <Header toRoute={replaceRoute} headerText={'Trailmaster'}/>
         <View style={styles.containerStyle}>
-          {this.visibleButtons(xAuth, styles)}
-          {/* {((isLoggedIn) => {
-            if (isLoggedIn) {
-              return (
-                <TouchableOpacity>
-                  <View style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>
-                      {this.savedMapsText()}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
-          })(xAuth)} */}
-          <TouchableOpacity onPress={xAuth ? this.logout.bind(this) : this
-            .showLogin
-            .bind(this)}>
+          {visibleButtons(xAuth, styles)}
+          <TouchableOpacity
+            onPress={xAuth
+              ? logout.bind(this)
+              : showLogin
+              .bind(this)}>
             {this.loginText(styles)}
           </TouchableOpacity>
         </View>
@@ -143,10 +184,10 @@ class HomeScreen extends React.Component {
 }
 
 HomeScreen.propTypes = {
-  userSession: React.PropTypes.object.isRequired,
-  toRoute: React.PropTypes.func.isRequired,
-  replaceRoute: React.PropTypes.func.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
+  userSession: PropTypes.object.isRequired,
+  toRoute: PropTypes.func.isRequired,
+  replaceRoute: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(state => state)(HomeScreen);
