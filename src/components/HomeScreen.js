@@ -14,7 +14,7 @@ import * as actions from '../redux/actions';
 import Header from './Header';
 import Login from './Login';
 import TrailList from './TrailList';
-import AddFeatureButton from './AddFeatureButton';
+import AddFeatureButton from './common/StandardButton';
 
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -66,11 +66,11 @@ class HomeScreen extends Component {
       return [
         <AddFeatureButton
           key={uuid()}
-          styles={styles}
+          styles={{buttonStyle: styles.featureButtonStyle, buttonTextStyle: styles.featureButtonTextStyle}}
           text={'Add PoI'} />,
         <AddFeatureButton
           key={uuid()}
-          styles={styles}
+          styles={{buttonStyle: styles.featureButtonStyle, buttonTextStyle: styles.featureButtonTextStyle}}
           text={'Add Route'} />,
         <TouchableOpacity
           key={uuid()}
