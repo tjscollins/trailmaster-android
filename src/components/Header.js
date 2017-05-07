@@ -17,7 +17,7 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-export class Header extends Component {
+class Header extends Component {
   headerButtonPress(name, component) {
     loaderHandler.showLoader(`Loading ${name}`);
     setTimeout(() => {

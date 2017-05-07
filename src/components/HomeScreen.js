@@ -4,7 +4,6 @@ import uuid from 'uuid';
 /*----------React----------*/
 import React, {Component, PropTypes} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 /*----------Redux----------*/
 import {connect} from 'react-redux';
@@ -62,16 +61,20 @@ class HomeScreen extends Component {
   }
   visibleButtons = (isLoggedIn, styles) => {
     const {replaceRoute} = this.props;
+    const savePOI = () => {};
+    const saveRoute = () => {};
     if (isLoggedIn) {
       return [
         <AddFeatureButton
           key={uuid()}
           styles={{buttonStyle: styles.featureButtonStyle, buttonTextStyle: styles.featureButtonTextStyle}}
-          text={'Add PoI'} />,
+          text={'Save New Point of Interest'}
+          onPress={savePOI}/>,
         <AddFeatureButton
           key={uuid()}
           styles={{buttonStyle: styles.featureButtonStyle, buttonTextStyle: styles.featureButtonTextStyle}}
-          text={'Add Route'} />,
+          text={'Save New Route'}
+          onPress={saveRoute} />,
         <TouchableOpacity
           key={uuid()}
           onPress={replaceRoute.bind(this, {
@@ -98,7 +101,7 @@ class HomeScreen extends Component {
         aspectRatio: 2,
         backgroundColor: '$infoButtonColor',
         borderColor: '#ddd',
-        borderRadius: 2,
+        borderRadius: 5,
         borderWidth: 1,
         elevation: 1,
         flex: 1,
@@ -118,7 +121,7 @@ class HomeScreen extends Component {
         aspectRatio: 2,
         backgroundColor: '$primaryButtonColor',
         borderColor: '#ddd',
-        borderRadius: 2,
+        borderRadius: 5,
         borderWidth: 1,
         elevation: 1,
         flex: 1,
@@ -127,18 +130,19 @@ class HomeScreen extends Component {
         marginRight: 0,
         maxHeight: '$homeScreenButtonHeight',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
       },
       featureButtonTextStyle: {
         fontWeight: 'bold',
         fontSize: 20,
         color: 'white',
+        textAlign: 'center',
       },
       loginButtonStyle: {
         aspectRatio: 2,
         backgroundColor: '$dangerButtonColor',
         borderColor: '#ddd',
-        borderRadius: 2,
+        borderRadius: 5,
         borderWidth: 1,
         elevation: 1,
         flex: 1,
