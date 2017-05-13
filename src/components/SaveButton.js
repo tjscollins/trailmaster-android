@@ -10,8 +10,6 @@ import * as actions from '../redux/actions';
 
 /*----------Components----------*/
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
-// import HomeScreen from './HomeScreen'; import FeatureList from
-// './FeatureList'; import MapViewer from './MapViewer';
 
 /*----------API----------*/
 import {month} from '../api/TrailmasterAPI';
@@ -32,7 +30,7 @@ class SaveButton extends Component {
     const {error} = this.state;
     console.log(this.state.error);
     if (/400/.test(error)) {
-      return ``
+      return ``;
     }
     return this.state.error;
   }
@@ -215,7 +213,7 @@ class SaveButton extends Component {
                 onPress={() => {
                   this.setState({trailModalVisible: true})
                 }}>
-                <View style={styles.saveTrailButton}>
+                <View style={styles.saveButtonStyle}>
                   <Text style={styles.buttonTextStyle}>
                     Save Trail
                   </Text>

@@ -3,7 +3,7 @@ import uuid from 'uuid';
 
 /*----------React----------*/
 import React, {Component, PropTypes} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, TextInput, View, TouchableOpacity, Modal} from 'react-native';
 
 /*----------Redux----------*/
 import {connect} from 'react-redux';
@@ -19,6 +19,9 @@ import AddFeatureButton from './common/StandardButton';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 class HomeScreen extends Component {
+  state = {
+    savePoiModalVisibile: false,
+  }
   showLogin() {
     this
       .props
@@ -60,8 +63,10 @@ class HomeScreen extends Component {
     return 'View Saved Maps';
   }
   visibleButtons = (isLoggedIn, styles) => {
-    const {replaceRoute} = this.props;
-    const savePOI = () => {};
+    const {replaceRoute, userSession} = this.props;
+    const savePOI = () => {
+      this.setState({savePoiModalVisibile: true});
+    };
     const saveRoute = () => {};
     if (isLoggedIn) {
       return [
@@ -167,6 +172,28 @@ class HomeScreen extends Component {
       },
       topLevelStyle: {
         flex: 1,
+      },
+      modalStyle: {
+        top: '25%',
+        left: '25%',
+        height: '50%',
+        width: '50%',
+        marginTop: 22,
+        backgroundColor: 'white',
+        alignItems: 'center'
+      },
+      formRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      formLabel: {
+        width: 75,
+        marginBottom: -10
+      },
+      formInput: {
+        width: 250,
+        textAlign: 'center'
       }
     });
     return (
@@ -182,6 +209,54 @@ class HomeScreen extends Component {
             {this.loginText(styles)}
           </TouchableOpacity>
         </View>
+
+        <Modal
+          animationType={"fade"}
+          transparent={false}
+          visible={this.state.savePoiModalVisibile}
+          onRequestClose={() => {
+            this.setState({savePoiModalVisibile: false})
+          }}>
+          <View style={styles.modalStyle}>
+            <View style={styles.newPoiFormStyle}>
+              <View style={styles.formRow}>
+                <TextInput
+                  autoFocus
+                  placeholder={'Name'}
+                  style={styles.formInput}
+                  onChangeText={name => this.setState({name})}/>
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  placeholder={'Description'}
+                  style={styles.formInput}
+                  onChangeText={desc => this.setState({desc})}/>
+              </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  style={styles.saveTrailButton}
+                  onPress={function (){}}>
+                  <Text style={styles.buttonTextStyle}>
+                    Save
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({trailModalVisible: false})
+                  }}>
+                  <View style={styles.cancelButton}>
+                    <Text style={styles.buttonTextStyle}>
+                      Cancel
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
       </View>
     );
   }
