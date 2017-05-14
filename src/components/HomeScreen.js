@@ -21,6 +21,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 class HomeScreen extends Component {
   state = {
     savePoiModalVisibile: false,
+    trackRouteModalVisible: false,
   }
   showLogin() {
     this
@@ -216,6 +217,53 @@ class HomeScreen extends Component {
           visible={this.state.savePoiModalVisibile}
           onRequestClose={() => {
             this.setState({savePoiModalVisibile: false})
+          }}>
+          <View style={styles.modalStyle}>
+            <View style={styles.newPoiFormStyle}>
+              <View style={styles.formRow}>
+                <TextInput
+                  autoFocus
+                  placeholder={'Name'}
+                  style={styles.formInput}
+                  onChangeText={name => this.setState({name})}/>
+              </View>
+              <View style={styles.formRow}>
+                <TextInput
+                  placeholder={'Description'}
+                  style={styles.formInput}
+                  onChangeText={desc => this.setState({desc})}/>
+              </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  style={styles.saveTrailButton}
+                  onPress={function (){}}>
+                  <Text style={styles.buttonTextStyle}>
+                    Save
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.formRow}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({trailModalVisible: false})
+                  }}>
+                  <View style={styles.cancelButton}>
+                    <Text style={styles.buttonTextStyle}>
+                      Cancel
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType={"fade"}
+          transparent={false}
+          visible={this.state.trackRouteModalVisible}
+          onRequestClose={() => {
+            this.setState({trackRouteModalVisible: false})
           }}>
           <View style={styles.modalStyle}>
             <View style={styles.newPoiFormStyle}>
