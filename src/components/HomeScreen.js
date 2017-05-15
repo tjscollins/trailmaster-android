@@ -14,6 +14,7 @@ import Header from './Header';
 import Login from './Login';
 import TrailList from './TrailList';
 import AddFeatureButton from './common/StandardButton';
+import FormModal from './common/FormModal';
 
 /*----------Style Sheets----------*/
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -183,6 +184,14 @@ class HomeScreen extends Component {
         backgroundColor: 'white',
         alignItems: 'center'
       },
+      formStyle: {
+        margin: 10,
+        flex: 1,
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+      },
       formRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -211,100 +220,47 @@ class HomeScreen extends Component {
           </TouchableOpacity>
         </View>
 
-        <Modal
-          animationType={"fade"}
-          transparent={false}
+        <FormModal
           visible={this.state.savePoiModalVisibile}
-          onRequestClose={() => {
-            this.setState({savePoiModalVisibile: false})
-          }}>
-          <View style={styles.modalStyle}>
-            <View style={styles.newPoiFormStyle}>
-              <View style={styles.formRow}>
-                <TextInput
-                  autoFocus
-                  placeholder={'Name'}
-                  style={styles.formInput}
-                  onChangeText={name => this.setState({name})}/>
-              </View>
-              <View style={styles.formRow}>
-                <TextInput
-                  placeholder={'Description'}
-                  style={styles.formInput}
-                  onChangeText={desc => this.setState({desc})}/>
-              </View>
-              <View style={styles.formRow}>
-                <TouchableOpacity
-                  style={styles.saveTrailButton}
-                  onPress={function (){}}>
-                  <Text style={styles.buttonTextStyle}>
-                    Save
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.formRow}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({trailModalVisible: false})
-                  }}>
-                  <View style={styles.cancelButton}>
-                    <Text style={styles.buttonTextStyle}>
-                      Cancel
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
+          close={() => this.setState({savePoiModalVisibile: false})}
+          save={() => {}}
+          saveText={'Save'}
+          styles={styles}>
+          <View style={styles.formRow}>
+            <TextInput
+              autoFocus
+              placeholder={'Name'}
+              style={styles.formInput}
+              onChangeText={name => this.setState({name})}/>
           </View>
-        </Modal>
+          <View style={styles.formRow}>
+            <TextInput
+              placeholder={'Description'}
+              style={styles.formInput}
+              onChangeText={desc => this.setState({desc})}/>
+          </View>
+        </FormModal>
 
-        <Modal
-          animationType={"fade"}
-          transparent={false}
+        <FormModal
           visible={this.state.trackRouteModalVisible}
-          onRequestClose={() => {
-            this.setState({trackRouteModalVisible: false})
-          }}>
-          <View style={styles.modalStyle}>
-            <View style={styles.newPoiFormStyle}>
-              <View style={styles.formRow}>
-                <TextInput
-                  autoFocus
-                  placeholder={'Name'}
-                  style={styles.formInput}
-                  onChangeText={name => this.setState({name})}/>
-              </View>
-              <View style={styles.formRow}>
-                <TextInput
-                  placeholder={'Description'}
-                  style={styles.formInput}
-                  onChangeText={desc => this.setState({desc})}/>
-              </View>
-              <View style={styles.formRow}>
-                <TouchableOpacity
-                  style={styles.saveTrailButton}
-                  onPress={function (){}}>
-                  <Text style={styles.buttonTextStyle}>
-                    Save
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.formRow}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({trailModalVisible: false})
-                  }}>
-                  <View style={styles.cancelButton}>
-                    <Text style={styles.buttonTextStyle}>
-                      Cancel
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
+          close={() => this.setState({trackRouteModalVisible: false})}
+          save={() => {}}
+          saveText={'Save'}
+          styles={styles}>
+          <View style={styles.formRow}>
+            <TextInput
+              autoFocus
+              placeholder={'Name'}
+              style={styles.formInput}
+              onChangeText={name => this.setState({name})}/>
           </View>
-        </Modal>
-
+          <View style={styles.formRow}>
+            <TextInput
+              placeholder={'Description'}
+              style={styles.formInput}
+              onChangeText={desc => this.setState({desc})}/>
+          </View>
+        </FormModal>
       </View>
     );
   }
